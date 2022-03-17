@@ -3,3 +3,9 @@
 ################################################################################
 
 /Win32/.vs/AddHotKey/v17
+/Win32/AddHotKey/Debug
+/Win32/AddHotKey/Release
+/Win32/AddHotKeyHook/Debug
+/Win32/AddHotKeyHook/Release
+/Win32/Debug
+/Win32/Release
