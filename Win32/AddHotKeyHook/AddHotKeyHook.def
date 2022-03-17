@@ -1,0 +1,4 @@
+LIBRARY	"AddHotKeyHook"
+EXPORTS
+   KeyboardProcMetaTrader	@1
+   KeyboardProcQuik			@2
