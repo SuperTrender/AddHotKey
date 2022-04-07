@@ -1,0 +1,16 @@
+{
+  "Version": 1,
+  "ProjectMap": {
+    "a2fe74e1-b743-11d0-ae1a-00a0c90fffc3": {
+      "ProjectGuid": "a2fe74e1-b743-11d0-ae1a-00a0c90fffc3",
+      "DisplayName": "Miscellaneous Files",
+      "ColorIndex": -1
+    },
+    "73ad3916-18a2-4e5b-9f5d-dc9fad598e98": {
+      "ProjectGuid": "73ad3916-18a2-4e5b-9f5d-dc9fad598e98",
+      "DisplayName": "AddHotKey",
+      "ColorIndex": 0
+    }
+  },
+  "NextColorIndex": 1
+}
