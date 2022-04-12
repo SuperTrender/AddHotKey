@@ -11,14 +11,14 @@ typedef struct tagTAB
 	LONG right;
 } TAB;
 
-const int GRAPHICS_MENU_POSITION = 4;
+const int CHARTS_MENU_POSITION = 4;
 const int TEMPLATE_MENU_POSITION = 9;
 const int AUTO_SCROLL_BUTTON_INDEX = 7;
 const int UNKNOWN_INDEX = -1;
 const int UNKNOWN_BUTTON_INDEX = -1;
 const int UNKNOWN_MENU_ITEM_INDEX = -1;
 const int UNKNOWN_MENU_ID_COMMAND = -1;
-const int GRAPHICS_TAB_COUNT = 9;
+const int CHARTS_TAB_COUNT = 9;
 const int DATA_EXPORT_MENU_POSITION_QUIK = 1;
 const int CHARTS_MENU_POSITION_QUIK = 2;
 const int INTERVAL_MENU_POSITION_QUIK = 15;
@@ -42,7 +42,7 @@ const HWND getHwndMain(const std::wstring& className);
 const HWND getHwndMT(void);
 const HWND getHwndQuik(void);
 const HWND getHwndStandard(void);
-const HWND getHwndGraphics(void);
+const HWND getHwndCharts(void);
 const HWND getHwndPeriod(void);
 const HWND getHwndTabs(void);
 const HMENU getHmenuInterval(void);

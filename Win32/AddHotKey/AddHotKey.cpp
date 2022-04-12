@@ -124,9 +124,9 @@ vector<wstring> initTemplatesFX(void)
 
 void toggleAutoScroll()
 {
-	HWND hwndGraphics = getHwndGraphics();
-	if (FAILED(SendMessage(hwndGraphics, WM_COMMAND,
-		MAKEWPARAM(getButtonIdCommand(hwndGraphics, AUTO_SCROLL_BUTTON_INDEX), 0), NULL)))
+	HWND hwndCharts = getHwndCharts();
+	if (FAILED(SendMessage(hwndCharts, WM_COMMAND,
+		MAKEWPARAM(getButtonIdCommand(hwndCharts, AUTO_SCROLL_BUTTON_INDEX), 0), NULL)))
 	{
 		wstring errorMessage(_T("Failed to send WM_COMMAND message"));
 		printError(errorMessage);
@@ -202,14 +202,14 @@ void changeTemplate(const wstring& templateName)
 		return;
 	}
 //	getMenuItemIdCommand(hmenuBar, _T("~DEBUG~"));
-	HMENU hmenuGraphics = GetSubMenu(hmenuBar, GRAPHICS_MENU_POSITION);
-	if (NULL == hmenuGraphics)
+	HMENU hmenuCharts = GetSubMenu(hmenuBar, CHARTS_MENU_POSITION);
+	if (NULL == hmenuCharts)
 	{
-		wstring errorMessage(_T("Failed to find hmenuGraphics"));
+		wstring errorMessage(_T("Failed to find hmenuCharts"));
 		printError(errorMessage);
 		return;
 	}
-	HMENU hmenuTemplate = GetSubMenu(hmenuGraphics, TEMPLATE_MENU_POSITION);
+	HMENU hmenuTemplate = GetSubMenu(hmenuCharts, TEMPLATE_MENU_POSITION);
 	if (NULL == hmenuTemplate)
 	{
 		wstring errorMessage(_T("Failed to find hmenuTemplate"));
@@ -282,7 +282,7 @@ void scrollTabs(const bool forward)
 		pt.x = windowInfo.rcClient.right - 30;
 	}
 	pt.y = (windowInfo.rcClient.bottom - windowInfo.rcClient.top) / 2;
-// 	ClientToScreen(hwndGraphics, &pt);
+// 	ClientToScreen(hwndCharts, &pt);
 // 	SetCursorPos(pt.x, pt.y);
 	LPARAM lParam = MAKELPARAM(pt.x, pt.y);
 	SendMessage(hwndTabs, WM_LBUTTONDOWN, MK_LBUTTON, lParam);
@@ -359,7 +359,7 @@ const HWND getHwndStandard(void)
 	return hwndStandard;
 }
 
-const HWND getHwndGraphics(void)
+const HWND getHwndCharts(void)
 {
 	HWND hwndStandard = getHwndStandard();
 	if (NULL == hwndStandard)
@@ -368,14 +368,14 @@ const HWND getHwndGraphics(void)
 		printError(errorMessage);
 		return NULL;
 	}
-	HWND hwndGraphics = FindWindowEx(hwndStandard, NULL, NULL, Config::getInstance().getChartsMetaTrader().c_str());
-	if (NULL == hwndGraphics)
+	HWND hwndCharts = FindWindowEx(hwndStandard, NULL, NULL, Config::getInstance().getChartsMetaTrader().c_str());
+	if (NULL == hwndCharts)
 	{
-		wstring errorMessage(_T("Failed to find hwndGraphics window"));
+		wstring errorMessage(_T("Failed to find hwndCharts window"));
 		printError(errorMessage);
 		return NULL;
 	}
-	return hwndGraphics;
+	return hwndCharts;
 }
 
 const HWND getHwndPeriod(void)
