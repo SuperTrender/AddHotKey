@@ -232,7 +232,7 @@ void changeTemplate(const wstring& templateName)
 	}
 }
 
-void changeGraphic(const bool forward)
+void changeChart(const bool forward)
 {
 	HWND hwndTabs = getHwndTabs();
 	TAB activeTab = getActiveTab(hwndTabs);

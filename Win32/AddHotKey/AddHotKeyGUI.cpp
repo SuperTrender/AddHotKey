@@ -223,7 +223,7 @@ void test(void)
 	scrollTabs(false);
 /**/
 /** /
-	changeGraphic(true);
+	changeChart(true);
 /**/
 /**/
 	Cycler<int> timeframesCycler(initTimeframes());

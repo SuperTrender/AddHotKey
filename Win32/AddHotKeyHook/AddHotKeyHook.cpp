@@ -92,11 +92,11 @@ LRESULT CALLBACK KeyboardProcMetaTrader(int nCode, WPARAM wParam, LPARAM lParam)
 		}
 		else if (wParam == VK_PRIOR)
 		{
-			changeGraphic(true);
+			changeChart(true);
 		}
 		else if (wParam == VK_NEXT)
 		{
-			changeGraphic(false);
+			changeChart(false);
 		}
 		else if (wParam == VK_HOME)
 		{
@@ -109,12 +109,12 @@ LRESULT CALLBACK KeyboardProcMetaTrader(int nCode, WPARAM wParam, LPARAM lParam)
 		else if (wParam == VK_INSERT)
 		{
 			scrollTabs(true);
-			changeGraphic(true);
+			changeChart(true);
 		}
 		else if (wParam == VK_DELETE)
 		{
 			scrollTabs(false);
-			changeGraphic(false);
+			changeChart(false);
 		}
 		else if (wParam == VK_A)
 		{

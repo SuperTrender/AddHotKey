@@ -35,7 +35,7 @@ void toggleAutoScroll(void);
 void changeTimeframe(const int buttonIndex);
 void changeTimeframeQuik(const int menuItemIndex);
 void changeTemplate(const std::wstring& templateName);
-void changeGraphic(const bool forward);
+void changeChart(const bool forward);
 void scrollTabs(const bool forward);
 void minimizeActiveChildWindowQuik();
 const HWND getHwndMain(const std::wstring& className);
