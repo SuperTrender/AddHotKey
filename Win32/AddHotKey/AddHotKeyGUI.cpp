@@ -213,6 +213,12 @@ INT_PTR CALLBACK About(HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam)
 	return (INT_PTR)FALSE;
 }
 
+
+/** /
+int timeframes[] = { H1, D1, W1, MN };
+const int getTimeframeIndex(const int timeframe);
+/**/
+
 void test(void)
 {
 /** /
@@ -251,4 +257,38 @@ void test(void)
 	initTimeframesQuik();
 	getMenuItemIndex(true);
 /**/
+
+/** /
+int currentTimeframeIndex = getTimeframeIndex(H1);
+//	currentTimeframeIndex = getTimeframeIndex(H1);
+//	currentTimeframeIndex = timeframesCycler.getIndex(H1);
+currentTimeframeIndex++;
+
+if (currentTimeframeIndex >= _countof(timeframes))
+{
+	currentTimeframeIndex = 0;
 }
+changeTimeframe(timeframes[currentTimeframeIndex]);
+
+currentTimeframeIndex--;
+if (currentTimeframeIndex < 0)
+{
+	currentTimeframeIndex = _countof(timeframes) - 1;
+}
+changeTimeframe(timeframes[currentTimeframeIndex]);
+/**/
+}
+
+/** /
+const int getTimeframeIndex(const int timeframe)
+{
+	for (int i = 0; i < _countof(timeframes); i++)
+	{
+		if (timeframes[i] == timeframe)
+		{
+			return i;
+		}
+	}
+	return -1;
+}
+/**/
