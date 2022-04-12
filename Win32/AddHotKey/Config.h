@@ -6,6 +6,9 @@
 #define PROPERTIES_FILE_NAME _T("AddHotKey.ini")
 #define META_TRADER_CLASS_NAME_PROPERTY_NAME _T("meta_trader_class_name")
 #define QUIK_CLASS_NAME_PROPERTY_NAME _T("quik_class_name")
+#define STANDARD_META_TRADER_PROPERTY_NAME _T("standard_meta_trader")
+#define CHARTS_META_TRADER_PROPERTY_NAME _T("charts_meta_trader")
+#define TIMEFRAMES_META_TRADER_PROPERTY_NAME _T("timeframes_meta_trader")
 #define PERIOD_META_TRADER_PROPERTY_NAME _T("period_meta_trader")
 #define TABS_CLASS_NAME_PROPERTY_NAME _T("tabs_class_name")
 #define TEMPLATES_LEFT_PROPERTY_NAME _T("templates_left")
@@ -23,6 +26,18 @@ public:
 	const std::wstring Config::getQuikClassName(void) const
 	{
 		return properties.getProperty(QUIK_CLASS_NAME_PROPERTY_NAME);
+	}
+	const std::wstring Config::getStandardMetaTrader(void) const
+	{
+		return properties.getProperty(STANDARD_META_TRADER_PROPERTY_NAME);
+	}
+	const std::wstring Config::getChartsMetaTrader(void) const
+	{
+		return properties.getProperty(CHARTS_META_TRADER_PROPERTY_NAME);
+	}
+	const std::wstring Config::getTimeframesMetaTrader(void) const
+	{
+		return properties.getProperty(TIMEFRAMES_META_TRADER_PROPERTY_NAME);
 	}
 	const std::wstring Config::getPeriodMetaTrader(void) const
 	{

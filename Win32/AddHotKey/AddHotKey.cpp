@@ -349,7 +349,7 @@ const HWND getHwndStandard(void)
 		printError(errorMessage);
 		return NULL;
 	}
-	HWND hwndStandard = FindWindowEx(hwndMT, NULL, NULL, _T("Стандартная"));
+	HWND hwndStandard = FindWindowEx(hwndMT, NULL, NULL, Config::getInstance().getStandardMetaTrader().c_str());
 	if (NULL == hwndStandard)
 	{
 		wstring errorMessage(_T("Failed to find hwndStandard window"));
@@ -368,7 +368,7 @@ const HWND getHwndGraphics(void)
 		printError(errorMessage);
 		return NULL;
 	}
-	HWND hwndGraphics = FindWindowEx(hwndStandard, NULL, NULL, _T("Графики"));
+	HWND hwndGraphics = FindWindowEx(hwndStandard, NULL, NULL, Config::getInstance().getChartsMetaTrader().c_str());
 	if (NULL == hwndGraphics)
 	{
 		wstring errorMessage(_T("Failed to find hwndGraphics window"));
@@ -387,7 +387,7 @@ const HWND getHwndPeriod(void)
 		printError(errorMessage);
 		return NULL;
 	}
-	HWND hwndPeriod = FindWindowEx(hwndStandard, NULL, NULL, Config::getInstance().getPeriodMetaTrader().c_str());
+	HWND hwndPeriod = FindWindowEx(hwndStandard, NULL, NULL, Config::getInstance().getTimeframesMetaTrader().c_str());
 	Logger::getInstance().log(_T("hwndPeriod: "));
 	Logger::getInstance().logln(hwndPeriod);
 	if (NULL == hwndPeriod)
@@ -408,8 +408,7 @@ const HWND getHwndTabs(void)
 		printError(errorMessage);
 		return NULL;
 	}
-	HWND hwndTabs = FindWindowEx(hwndMT, NULL,
-		Config::getInstance().getTabsClassName().c_str(), NULL);
+	HWND hwndTabs = FindWindowEx(hwndMT, NULL, Config::getInstance().getTabsClassName().c_str(), NULL);
 	if (NULL == hwndTabs)
 	{
 		wstring errorMessage(_T("Failed to find hwndTabs window"));
