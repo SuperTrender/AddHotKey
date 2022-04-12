@@ -222,6 +222,9 @@ const int getTimeframeIndex(const int timeframe);
 void test(void)
 {
 /** /
+	getHwndTabs();
+/**/
+/** /
 	toggleAutoScroll();
 /**/
 /** /

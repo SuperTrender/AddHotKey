@@ -10,7 +10,12 @@
       "ProjectGuid": "73ad3916-18a2-4e5b-9f5d-dc9fad598e98",
       "DisplayName": "AddHotKey",
       "ColorIndex": 0
+    },
+    "d10c5fd1-ab5c-4432-bef2-ade710ad0db2": {
+      "ProjectGuid": "d10c5fd1-ab5c-4432-bef2-ade710ad0db2",
+      "DisplayName": "AddHotKeyHook",
+      "ColorIndex": 1
     }
   },
-  "NextColorIndex": 1
+  "NextColorIndex": 2
 }
