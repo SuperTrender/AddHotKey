@@ -9,7 +9,6 @@
 #define STANDARD_META_TRADER_PROPERTY_NAME _T("standard_meta_trader")
 #define CHARTS_META_TRADER_PROPERTY_NAME _T("charts_meta_trader")
 #define TIMEFRAMES_META_TRADER_PROPERTY_NAME _T("timeframes_meta_trader")
-#define PERIOD_META_TRADER_PROPERTY_NAME _T("period_meta_trader")
 #define TABS_CLASS_NAME_PROPERTY_NAME _T("tabs_class_name")
 #define TEMPLATES_LEFT_PROPERTY_NAME _T("templates_left")
 #define TEMPLATES_RIGHT_PROPERTY_NAME _T("templates_right")
@@ -38,10 +37,6 @@ public:
 	const std::wstring Config::getTimeframesMetaTrader(void) const
 	{
 		return properties.getProperty(TIMEFRAMES_META_TRADER_PROPERTY_NAME);
-	}
-	const std::wstring Config::getPeriodMetaTrader(void) const
-	{
-		return properties.getProperty(PERIOD_META_TRADER_PROPERTY_NAME);
 	}
 	const std::wstring Config::getTabsClassName(void) const
 	{

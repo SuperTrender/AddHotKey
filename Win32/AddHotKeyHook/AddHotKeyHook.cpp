@@ -17,10 +17,10 @@ using namespace std;
 
 // —оздаЄм глобальную переменную дл€ объ€влени€ глобального хука.
 HHOOK hHookKeyboard = NULL;
-Cycler<int> periodCycler(initPeriods());
+Cycler<int> timeframesCycler(initTimeframes());
 Cycler<wstring> templateCycler(initTemplates());
 Cycler<wstring> templateCyclerFX(initTemplatesFX());
-Cycler<int> periodCyclerQuik(initPeriodsQuik());
+Cycler<int> timeframesCyclerQuik(initTimeframesQuik());
 
 BOOL APIENTRY DllMain(HMODULE hModule, DWORD ul_reason_for_call, LPVOID lpReserved)
 {
@@ -54,33 +54,33 @@ LRESULT CALLBACK KeyboardProcMetaTrader(int nCode, WPARAM wParam, LPARAM lParam)
 	{
 		if (wParam == VK_F1)
 		{
-			changePeriod(H1);
+			changeTimeframe(H1);
 		}
 		if (wParam == VK_F2)
 		{
-			changePeriod(H4);
+			changeTimeframe(H4);
 		}
 		else if (wParam == VK_F3)
 		{
-			changePeriod(D1);
+			changeTimeframe(D1);
 		}
 		else if (wParam == VK_F5)
 		{
-			changePeriod(W1);
+			changeTimeframe(W1);
 		}
 		else if (wParam == VK_F6)
 		{
-			changePeriod(MN);
+			changeTimeframe(MN);
 		}
 		else if (wParam == VK_UP)
 		{
-			periodCycler.setCurrentIndex(getButtonIndex(true));
-			changePeriod(periodCycler.forward());
+			timeframesCycler.setCurrentIndex(getButtonIndex(true));
+			changeTimeframe(timeframesCycler.forward());
 		}
 		else if (wParam == VK_DOWN)
 		{
-			periodCycler.setCurrentIndex(getButtonIndex(false));
-			changePeriod(periodCycler.backward());
+			timeframesCycler.setCurrentIndex(getButtonIndex(false));
+			changeTimeframe(timeframesCycler.backward());
 		}
 		else if (wParam == VK_LEFT)
 		{
@@ -136,25 +136,25 @@ LRESULT CALLBACK KeyboardProcQuik(int nCode, WPARAM wParam, LPARAM lParam)
 	{
 		if (wParam == VK_F2)
 		{
-			changePeriodQuik(Daily);
+			changeTimeframeQuik(Daily);
 		}
 		else if (wParam == VK_F3)
 		{
-			changePeriodQuik(Weekly);
+			changeTimeframeQuik(Weekly);
 		}
 		else if (wParam == VK_F5)
 		{
-			changePeriodQuik(Monthly);
+			changeTimeframeQuik(Monthly);
 		}
 		else if (wParam == VK_UP)
 		{
-			periodCyclerQuik.setCurrentIndex(getMenuItemIndex(true));
-			changePeriodQuik(periodCyclerQuik.forward());
+			timeframesCyclerQuik.setCurrentIndex(getMenuItemIndex(true));
+			changeTimeframeQuik(timeframesCyclerQuik.forward());
 		}
 		else if (wParam == VK_DOWN)
 		{
-			periodCyclerQuik.setCurrentIndex(getMenuItemIndex(false));
-			changePeriodQuik(periodCyclerQuik.backward());
+			timeframesCyclerQuik.setCurrentIndex(getMenuItemIndex(false));
+			changeTimeframeQuik(timeframesCyclerQuik.backward());
 		}
 		else if (wParam == VK_M)
 		{

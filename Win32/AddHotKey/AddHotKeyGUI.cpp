@@ -226,29 +226,29 @@ void test(void)
 	changeGraphic(true);
 /**/
 /**/
-	Cycler<int> periodCycler(initPeriods());
-	periodCycler.setCurrentIndex(getButtonIndex(true));
-	changePeriod(periodCycler.forward());
-// 	periodCycler.setCurrentIndex(getButtonIndex(false));
-// 	changePeriod(periodCycler.backward());
+	Cycler<int> timeframesCycler(initTimeframes());
+	timeframesCycler.setCurrentIndex(getButtonIndex(true));
+	changeTimeframe(timeframesCycler.forward());
+// 	timeframesCycler.setCurrentIndex(getButtonIndex(false));
+// 	changeTimeframe(timeframesCycler.backward());
 /**/
 /** /
 	changeTemplate(_T("ADX"));
 /**/
 /** /
-	changePeriod(0);
+	changeTimeframe(0);
 /**/
 /** /
-	initPeriods();
+	initTimeframes();
 	int buttonIndex = getButtonIndex(true);
 	buttonIndex += 0;
 /**/
 /** /
-	changePeriodQuik(Daily);
-	changePeriodQuik(Weekly);
+	changeTimeframeQuik(Daily);
+	changeTimeframeQuik(Weekly);
 /**/
 /** /
-	initPeriodsQuik();
+	initTimeframesQuik();
 	getMenuItemIndex(true);
 /**/
 }

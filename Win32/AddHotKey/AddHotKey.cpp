@@ -6,8 +6,8 @@
 
 using namespace std;
 
-vector<int> periods;
-vector<int> periodsQuik;
+vector<int> timeframes;
+vector<int> timeframesQuik;
 vector<HHOOK> hHooksKeyboard;
 
 vector<HHOOK> addHooks(void)
@@ -93,23 +93,23 @@ void removeHooks(const vector<HHOOK>& hHooks)
 	}
 }
 
-vector<int> initPeriods(void)
+vector<int> initTimeframes(void)
 {
-	periods.push_back(H1);
-	periods.push_back(H4);
-	periods.push_back(D1);
-	periods.push_back(W1);
-	periods.push_back(MN);
-	return periods;
+	timeframes.push_back(H1);
+	timeframes.push_back(H4);
+	timeframes.push_back(D1);
+	timeframes.push_back(W1);
+	timeframes.push_back(MN);
+	return timeframes;
 }
 
-vector<int> initPeriodsQuik(void)
+vector<int> initTimeframesQuik(void)
 {
-	periodsQuik.push_back(Hourly);
-	periodsQuik.push_back(Daily);
-	periodsQuik.push_back(Weekly);
-	periodsQuik.push_back(Monthly);
-	return periodsQuik;
+	timeframesQuik.push_back(Hourly);
+	timeframesQuik.push_back(Daily);
+	timeframesQuik.push_back(Weekly);
+	timeframesQuik.push_back(Monthly);
+	return timeframesQuik;
 }
 
 vector<wstring> initTemplates(void)
@@ -134,17 +134,17 @@ void toggleAutoScroll()
 	}
 }
 
-void changePeriod(const int buttonIndex)
+void changeTimeframe(const int buttonIndex)
 {
-	HWND hwndPeriod = getHwndPeriod();
-	if (NULL == hwndPeriod)
+	HWND hwndTimeframes = getHwndTimeframes();
+	if (NULL == hwndTimeframes)
 	{
-		wstring errorMessage(_T("Failed to getHwndPeriod"));
+		wstring errorMessage(_T("Failed to getHwndTimeframes"));
 		printError(errorMessage);
 		return;
 	}
-	if (FAILED(SendMessage(hwndPeriod, WM_COMMAND,
-		MAKEWPARAM(getButtonIdCommand(hwndPeriod, buttonIndex), 0), NULL)))
+	if (FAILED(SendMessage(hwndTimeframes, WM_COMMAND,
+		MAKEWPARAM(getButtonIdCommand(hwndTimeframes, buttonIndex), 0), NULL)))
 	{
 		wstring errorMessage(_T("Failed to send WM_COMMAND message"));
 		printError(errorMessage);
@@ -152,7 +152,7 @@ void changePeriod(const int buttonIndex)
 	}
 }
 
-void changePeriodQuik(const int menuItemIndex)
+void changeTimeframeQuik(const int menuItemIndex)
 {
 	HWND hwndQuik = getHwndQuik();
 	if (NULL == hwndQuik)
@@ -378,7 +378,7 @@ const HWND getHwndCharts(void)
 	return hwndCharts;
 }
 
-const HWND getHwndPeriod(void)
+const HWND getHwndTimeframes(void)
 {
 	HWND hwndStandard = getHwndStandard();
 	if (NULL == hwndStandard)
@@ -387,16 +387,16 @@ const HWND getHwndPeriod(void)
 		printError(errorMessage);
 		return NULL;
 	}
-	HWND hwndPeriod = FindWindowEx(hwndStandard, NULL, NULL, Config::getInstance().getTimeframesMetaTrader().c_str());
-	Logger::getInstance().log(_T("hwndPeriod: "));
-	Logger::getInstance().logln(hwndPeriod);
-	if (NULL == hwndPeriod)
+	HWND hwndTimeframes = FindWindowEx(hwndStandard, NULL, NULL, Config::getInstance().getTimeframesMetaTrader().c_str());
+	Logger::getInstance().log(_T("hwndTimeframes: "));
+	Logger::getInstance().logln(hwndTimeframes);
+	if (NULL == hwndTimeframes)
 	{
-		wstring errorMessage(_T("Failed to find hwndPeriod window"));
+		wstring errorMessage(_T("Failed to find hwndTimeframes window"));
 		printError(errorMessage);
 		return NULL;
 	}
-	return hwndPeriod;
+	return hwndTimeframes;
 }
 
 const HWND getHwndTabs(void)
@@ -519,19 +519,19 @@ const wstring getWindowText(HWND hWnd)
 const int getButtonIndex(const bool forForward)
 {
 /** /
-	HWND hwndPeriod = getHwndPeriod();
-	if (NULL == hwndPeriod)
+	HWND hwndTimeframes = getHwndTimeframes();
+	if (NULL == hwndTimeframes)
 	{
-		wstring errorMessage(_T("Failed to getHwndPeriod"));
+		wstring errorMessage(_T("Failed to getHwndTimeframes"));
 		printError(errorMessage);
 		return UNKNOWN_BUTTON_INDEX;
 	}
 	int checkedButtonIndex = UNKNOWN_BUTTON_INDEX;
-	LRESULT buttonCount = SendMessage(hwndPeriod, TB_BUTTONCOUNT, 0, 0);
+	LRESULT buttonCount = SendMessage(hwndTimeframes, TB_BUTTONCOUNT, 0, 0);
 	for (int i = 0; i < buttonCount; i++)
 	{
-		if (SendMessage(hwndPeriod, TB_ISBUTTONCHECKED,
-						getButtonIdCommand(hwndPeriod, i), 0))
+		if (SendMessage(hwndTimeframes, TB_ISBUTTONCHECKED,
+						getButtonIdCommand(hwndTimeframes, i), 0))
 		{
 			checkedButtonIndex = i;
 		}
@@ -539,15 +539,15 @@ const int getButtonIndex(const bool forForward)
 /**/
 	
 /**/
-	int checkedButtonIndex = getCurrentPeriodIndex();
+	int checkedButtonIndex = getCurrentTimeframeIndex();
 /**/
 
 	Logger::getInstance().logln(_T(""));
-	Logger::getInstance().logln(_T("enum Period {H1 = 4, H4 = 5, D1 = 6, W1 = 7, MN = 8};"));
+	Logger::getInstance().logln(_T("enum Timeframes {H1 = 4, H4 = 5, D1 = 6, W1 = 7, MN = 8};"));
 	Logger::getInstance().log(_T("checkedButtonIndex: "));
 	Logger::getInstance().logln(checkedButtonIndex);
 
-	int index = getIndex(forForward, periods, checkedButtonIndex);
+	int index = getIndex(forForward, timeframes, checkedButtonIndex);
 
 	Logger::getInstance().log(_T("index: "));
 	Logger::getInstance().logln(index);
@@ -565,16 +565,14 @@ const int getButtonIdCommand(HWND hWnd, const int buttonIndex)
 
 	GetWindowThreadProcessId(hWnd, &dwProcessId); 
 	hTaskProc = OpenProcess(PROCESS_ALL_ACCESS, 0, dwProcessId); 
-	lpRemoteBuffer = VirtualAllocEx(hTaskProc, NULL, sizeof(TBBUTTON),
-		MEM_COMMIT, PAGE_READWRITE);
+	lpRemoteBuffer = VirtualAllocEx(hTaskProc, NULL, sizeof(TBBUTTON), MEM_COMMIT, PAGE_READWRITE);
 	if (!SendMessage(hWnd, TB_GETBUTTON, buttonIndex, (LPARAM) lpRemoteBuffer))
 	{
 		wstring errorMessage(_T("Failed to TB_GETBUTTON"));
 		printError(errorMessage);
 		return -1;
 	}
-	if (!ReadProcessMemory(hTaskProc, lpRemoteBuffer, &Button, sizeof(TBBUTTON),
-		&lpNumberOfBytesRead))
+	if (!ReadProcessMemory(hTaskProc, lpRemoteBuffer, &Button, sizeof(TBBUTTON), &lpNumberOfBytesRead))
 	{
 		wstring errorMessage(_T("Failed to ReadProcessMemory"));
 		printError(errorMessage);
@@ -618,7 +616,7 @@ const int getMenuItemIndex(const bool forForward)
 			checkedMenuItemIndex = i;
 		}
 	}
-	return getIndex(forForward, periodsQuik, checkedMenuItemIndex);
+	return getIndex(forForward, timeframesQuik, checkedMenuItemIndex);
 }
 
 const int getMenuItemIdCommand(HMENU hMenu, const wstring& srcMenuItemName)
@@ -662,12 +660,11 @@ const int getMenuItemIdCommand(HMENU hMenu, const wstring& srcMenuItemName)
 	return UNKNOWN_MENU_ID_COMMAND;
 }
 
-const int getIndex(const bool forForward, const vector<int>& periods,
-				   const int checkedIndex)
+const int getIndex(const bool forForward, const vector<int>& timeframes, const int checkedIndex)
 {
-	for (int i = 0; i < static_cast<int>(periods.size()); i++)
+	for (int i = 0; i < static_cast<int>(timeframes.size()); i++)
 	{
-		const int& value = periods[i];
+		const int& value = timeframes[i];
 		if (value == checkedIndex)
 		{
 			return checkedIndex;
@@ -676,9 +673,9 @@ const int getIndex(const bool forForward, const vector<int>& periods,
 	int index = UNKNOWN_INDEX;
 	if (forForward)
 	{
-		for (int i = 0; i < static_cast<int>(periods.size()); i++)
+		for (int i = 0; i < static_cast<int>(timeframes.size()); i++)
 		{
-			const int& value = periods[i];
+			const int& value = timeframes[i];
 			if (value < checkedIndex)
 			{
 				index = value;
@@ -687,9 +684,9 @@ const int getIndex(const bool forForward, const vector<int>& periods,
 	}
 	else
 	{
-		for (int i = static_cast<int>(periods.size()) - 1; i >= 0; i--)
+		for (int i = static_cast<int>(timeframes.size()) - 1; i >= 0; i--)
 		{
-			const int& value = periods[i];
+			const int& value = timeframes[i];
 			if (value > checkedIndex)
 			{
 				index = value;
@@ -699,33 +696,33 @@ const int getIndex(const bool forForward, const vector<int>& periods,
 	return index;
 }
 
-const int getCurrentPeriodIndex(void)
+const int getCurrentTimeframeIndex(void)
 {
-	int currentPeriodIndex = H1;
+	int currentTimeframeIndex = H1;
 	wstring windowTextMT = getWindowText(getHwndMT());
 
 	wstring::size_type openBracketIndex = windowTextMT.find(_T("["));
 	wstring::size_type closeBracketIndex = windowTextMT.find(_T("]"));
 	if ((openBracketIndex != wstring::npos) && (closeBracketIndex != wstring::npos))
 	{
-		wstring currentPeriod = getLastSplittedElement(
+		wstring currentTimeframe = getLastSplittedElement(
 			windowTextMT.substr(openBracketIndex + 1, closeBracketIndex - openBracketIndex - 1), COMMA);
 
-		typedef map<wstring, int> PeriodsMap;
-		PeriodsMap periods;
+		typedef map<wstring, int> TimeframesMap;
+		TimeframesMap timeframes;
 
-		periods[_T("H1")] = H1;
-		periods[_T("H4")] = H4;
-		periods[_T("Daily")] = D1;
-		periods[_T("Weekly")] = W1;
-		periods[_T("Monthly")] = MN;
+		timeframes[_T("H1")] = H1;
+		timeframes[_T("H4")] = H4;
+		timeframes[_T("Daily")] = D1;
+		timeframes[_T("Weekly")] = W1;
+		timeframes[_T("Monthly")] = MN;
 
-		PeriodsMap::const_iterator periodsIterator = periods.find(currentPeriod);
-		if (periodsIterator != periods.end( ))
+		TimeframesMap::const_iterator timeframesIterator = timeframes.find(currentTimeframe);
+		if (timeframesIterator != timeframes.end( ))
 		{
-			currentPeriodIndex = periods[currentPeriod];
+			currentTimeframeIndex = timeframes[currentTimeframe];
 		}
 	}
 
-	return currentPeriodIndex;
+	return currentTimeframeIndex;
 }
