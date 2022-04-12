@@ -13,7 +13,7 @@ typedef struct tagTAB
 
 const int CHARTS_MENU_POSITION = 4;
 const int TEMPLATE_MENU_POSITION = 9;
-const int AUTO_SCROLL_BUTTON_INDEX = 7;
+const int AUTO_SCROLL_BUTTON_INDEX = 8;
 const int UNKNOWN_INDEX = -1;
 const int UNKNOWN_BUTTON_INDEX = -1;
 const int UNKNOWN_MENU_ITEM_INDEX = -1;
