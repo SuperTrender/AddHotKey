@@ -124,7 +124,7 @@ vector<wstring> initTemplatesFX(void)
 
 void toggleAutoScroll()
 {
-	HWND hwndCharts = getHwndCharts();
+	HWND hwndCharts = Config::getInstance().getChartsHwnd();
 	if (FAILED(SendMessage(hwndCharts, WM_COMMAND,
 		MAKEWPARAM(getButtonIdCommand(hwndCharts, AUTO_SCROLL_BUTTON_INDEX), 0), NULL)))
 	{
@@ -136,13 +136,7 @@ void toggleAutoScroll()
 
 void changeTimeframe(const int buttonIndex)
 {
-	HWND hwndTimeframes = getHwndTimeframes();
-	if (NULL == hwndTimeframes)
-	{
-		wstring errorMessage(_T("Failed to getHwndTimeframes"));
-		printError(errorMessage);
-		return;
-	}
+	HWND hwndTimeframes = Config::getInstance().getTimeframesHwnd();
 	if (FAILED(SendMessage(hwndTimeframes, WM_COMMAND,
 		MAKEWPARAM(getButtonIdCommand(hwndTimeframes, buttonIndex), 0), NULL)))
 	{
@@ -154,20 +148,8 @@ void changeTimeframe(const int buttonIndex)
 
 void changeTimeframeQuik(const int menuItemIndex)
 {
-	HWND hwndQuik = getHwndQuik();
-	if (NULL == hwndQuik)
-	{
-		wstring errorMessage(_T("Failed to find hwndQuik window"));
-		printError(errorMessage);
-		return;
-	}
-	HMENU hmenuInterval = getHmenuInterval();
-	if (NULL == hmenuInterval)
-	{
-		wstring errorMessage(_T("Failed to find hmenuInterval"));
-		printError(errorMessage);
-		return;
-	}
+	HWND hwndQuik = Config::getInstance().getQuikHwnd();
+	HMENU hmenuInterval = Config::getInstance().getIntervalHmenu();
 //	getMenuItemIdCommand(hmenuInterval, _T("~DEBUG~"));
 	const int menuIdCommand = GetMenuItemID(hmenuInterval, menuItemIndex);
 	if (UNKNOWN_MENU_ID_COMMAND == menuIdCommand)
@@ -187,13 +169,7 @@ void changeTimeframeQuik(const int menuItemIndex)
 
 void changeTemplate(const wstring& templateName)
 {
-	HWND hwndMT = getHwndMT();
-	if (NULL == hwndMT)
-	{
-		wstring errorMessage(_T("Failed to find hwndMT window"));
-		printError(errorMessage);
-		return;
-	}
+	HWND hwndMT = Config::getInstance().getMTHwnd();
 	HMENU hmenuBar = GetMenu(hwndMT);
 	if (NULL == hmenuBar)
 	{
@@ -234,7 +210,7 @@ void changeTemplate(const wstring& templateName)
 
 void changeChart(const bool forward)
 {
-	HWND hwndTabs = getHwndTabs();
+	HWND hwndTabs = Config::getInstance().getTabsHwnd();
 	TAB activeTab = getActiveTab(hwndTabs);
 	int deltaX = 10;
 	int x = 0;
@@ -268,7 +244,7 @@ void changeChart(const bool forward)
 
 void scrollTabs(const bool forward)
 {
-	HWND hwndTabs = getHwndTabs();
+	HWND hwndTabs = Config::getInstance().getTabsHwnd();
 	WINDOWINFO windowInfo;
 	windowInfo.cbSize = sizeof(WINDOWINFO);
 	GetWindowInfo(hwndTabs, &windowInfo);
@@ -291,13 +267,7 @@ void scrollTabs(const bool forward)
 
 void minimizeActiveChildWindowQuik()
 {
-	HWND hwndQuik = getHwndQuik();
-	if (NULL == hwndQuik)
-	{
-		wstring errorMessage(_T("Failed to find hwndQuik window"));
-		printError(errorMessage);
-		return;
-	}
+	HWND hwndQuik = Config::getInstance().getQuikHwnd();
 	const wstring mdiClientClassName(_T("MDIClient"));
 	HWND hwndMDIClient = FindWindowEx(hwndQuik, NULL, mdiClientClassName.c_str(), NULL);
 	if (NULL == hwndMDIClient)
@@ -330,26 +300,21 @@ const HWND getHwndMain(const wstring& className)
 	return hwndMain;
 }
 
-const HWND getHwndMT(void)
+const HWND getHwndMT(const wstring& className)
 {
-	return getHwndMain(Config::getInstance().getMetaTraderClassName().c_str());
-}
-
-const HWND getHwndQuik(void)
-{
-	return getHwndMain(Config::getInstance().getQuikClassName().c_str());
-}
-
-const HWND getHwndStandard(void)
-{
-	HWND hwndMT = getHwndMT();
+	HWND hwndMT = getHwndMain(className);
 	if (NULL == hwndMT)
 	{
 		wstring errorMessage(_T("Failed to find hwndMT window"));
 		printError(errorMessage);
 		return NULL;
 	}
-	HWND hwndStandard = FindWindowEx(hwndMT, NULL, NULL, Config::getInstance().getStandardMetaTrader().c_str());
+	return hwndMT;
+}
+
+const HWND getHwndStandard(HWND hwndMT, const wstring& standardMetaTrader)
+{
+	HWND hwndStandard = FindWindowEx(hwndMT, NULL, NULL, standardMetaTrader.c_str());
 	if (NULL == hwndStandard)
 	{
 		wstring errorMessage(_T("Failed to find hwndStandard window"));
@@ -359,16 +324,9 @@ const HWND getHwndStandard(void)
 	return hwndStandard;
 }
 
-const HWND getHwndCharts(void)
+const HWND getHwndCharts(HWND hwndStandard, const wstring& chartsMetaTrader)
 {
-	HWND hwndStandard = getHwndStandard();
-	if (NULL == hwndStandard)
-	{
-		wstring errorMessage(_T("Failed to find hwndStandard window"));
-		printError(errorMessage);
-		return NULL;
-	}
-	HWND hwndCharts = FindWindowEx(hwndStandard, NULL, NULL, Config::getInstance().getChartsMetaTrader().c_str());
+	HWND hwndCharts = FindWindowEx(hwndStandard, NULL, NULL, chartsMetaTrader.c_str());
 	if (NULL == hwndCharts)
 	{
 		wstring errorMessage(_T("Failed to find hwndCharts window"));
@@ -378,16 +336,9 @@ const HWND getHwndCharts(void)
 	return hwndCharts;
 }
 
-const HWND getHwndTimeframes(void)
+const HWND getHwndTimeframes(HWND hwndStandard, const wstring& timeframesMetaTrader)
 {
-	HWND hwndStandard = getHwndStandard();
-	if (NULL == hwndStandard)
-	{
-		wstring errorMessage(_T("Failed to find hwndStandard window"));
-		printError(errorMessage);
-		return NULL;
-	}
-	HWND hwndTimeframes = FindWindowEx(hwndStandard, NULL, NULL, Config::getInstance().getTimeframesMetaTrader().c_str());
+	HWND hwndTimeframes = FindWindowEx(hwndStandard, NULL, NULL, timeframesMetaTrader.c_str());
 	Logger::getInstance().log(_T("hwndTimeframes: "));
 	Logger::getInstance().logln(hwndTimeframes);
 	if (NULL == hwndTimeframes)
@@ -399,16 +350,9 @@ const HWND getHwndTimeframes(void)
 	return hwndTimeframes;
 }
 
-const HWND getHwndTabs(void)
+const HWND getHwndTabs(HWND hwndMT, const wstring& tabsClassName)
 {
-	HWND hwndMT = getHwndMT();
-	if (NULL == hwndMT)
-	{
-		wstring errorMessage(_T("Failed to find hwndMT window"));
-		printError(errorMessage);
-		return NULL;
-	}
-	HWND hwndTabs = FindWindowEx(hwndMT, NULL, Config::getInstance().getTabsClassName().c_str(), NULL);
+	HWND hwndTabs = FindWindowEx(hwndMT, NULL, tabsClassName.c_str(), NULL);
 	if (NULL == hwndTabs)
 	{
 		wstring errorMessage(_T("Failed to find hwndTabs window"));
@@ -418,15 +362,20 @@ const HWND getHwndTabs(void)
 	return hwndTabs;
 }
 
-const HMENU getHmenuInterval(void)
+const HWND getHwndQuik(const wstring& className)
 {
-	HWND hwndQuik = getHwndQuik();
+	HWND hwndQuik = getHwndMain(className);
 	if (NULL == hwndQuik)
 	{
 		wstring errorMessage(_T("Failed to find hwndQuik window"));
 		printError(errorMessage);
 		return NULL;
 	}
+	return hwndQuik;
+}
+
+const HMENU getHmenuInterval(HWND hwndQuik)
+{
 	HMENU hmenuBar = GetMenu(hwndQuik);
 	if (NULL == hmenuBar)
 	{
@@ -519,13 +468,7 @@ const wstring getWindowText(HWND hWnd)
 const int getButtonIndex(const bool forForward)
 {
 /** /
-	HWND hwndTimeframes = getHwndTimeframes();
-	if (NULL == hwndTimeframes)
-	{
-		wstring errorMessage(_T("Failed to getHwndTimeframes"));
-		printError(errorMessage);
-		return UNKNOWN_BUTTON_INDEX;
-	}
+	HWND hwndTimeframes = Config::getInstance().getTimeframesHwnd();
 	int checkedButtonIndex = UNKNOWN_BUTTON_INDEX;
 	LRESULT buttonCount = SendMessage(hwndTimeframes, TB_BUTTONCOUNT, 0, 0);
 	for (int i = 0; i < buttonCount; i++)
@@ -585,11 +528,9 @@ const int getButtonIdCommand(HWND hWnd, const int buttonIndex)
 
 const int getMenuItemIndex(const bool forForward)
 {
-	HMENU hmenuInterval = getHmenuInterval();
+	HMENU hmenuInterval = Config::getInstance().getIntervalHmenu();
 	if (NULL == hmenuInterval)
 	{
-		wstring errorMessage(_T("Failed to find hmenuInterval"));
-		printError(errorMessage);
 		return UNKNOWN_MENU_ITEM_INDEX;
 	}
 	int menuItemCount = GetMenuItemCount(hmenuInterval);
@@ -699,7 +640,7 @@ const int getIndex(const bool forForward, const vector<int>& timeframes, const i
 const int getCurrentTimeframeIndex(void)
 {
 	int currentTimeframeIndex = H1;
-	wstring windowTextMT = getWindowText(getHwndMT());
+	wstring windowTextMT = getWindowText(Config::getInstance().getMTHwnd());
 
 	wstring::size_type openBracketIndex = windowTextMT.find(_T("["));
 	wstring::size_type closeBracketIndex = windowTextMT.find(_T("]"));
@@ -707,20 +648,11 @@ const int getCurrentTimeframeIndex(void)
 	{
 		wstring currentTimeframe = getLastSplittedElement(
 			windowTextMT.substr(openBracketIndex + 1, closeBracketIndex - openBracketIndex - 1), COMMA);
-
-		typedef map<wstring, int> TimeframesMap;
-		TimeframesMap timeframes;
-
-		timeframes[_T("H1")] = H1;
-		timeframes[_T("H4")] = H4;
-		timeframes[_T("Daily")] = D1;
-		timeframes[_T("Weekly")] = W1;
-		timeframes[_T("Monthly")] = MN;
-
-		TimeframesMap::const_iterator timeframesIterator = timeframes.find(currentTimeframe);
-		if (timeframesIterator != timeframes.end( ))
+		TimeframesMap timeframesMap = Config::getInstance().getTimeframesMap();
+		TimeframesMap::const_iterator timeframesIterator = timeframesMap.find(currentTimeframe);
+		if (timeframesIterator != timeframesMap.end( ))
 		{
-			currentTimeframeIndex = timeframes[currentTimeframe];
+			currentTimeframeIndex = timeframesMap[currentTimeframe];
 		}
 	}
 
