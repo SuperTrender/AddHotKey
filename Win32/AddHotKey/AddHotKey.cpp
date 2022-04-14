@@ -91,44 +91,11 @@ void removeHooks(const vector<HHOOK>& hHooks)
 	}
 }
 
-void toggleAutoScroll()
-{
-	HWND hwndCharts = Config::getInstance().getChartsHwnd();
-	if (FAILED(SendMessage(hwndCharts, WM_COMMAND,
-		MAKEWPARAM(getButtonIdCommand(hwndCharts, AUTO_SCROLL_BUTTON_INDEX), 0), NULL)))
-	{
-		wstring errorMessage(_T("Failed to send WM_COMMAND message"));
-		printError(errorMessage);
-		return;
-	}
-}
-
 void changeTimeframe(const int buttonIndex)
 {
 	HWND hwndTimeframes = Config::getInstance().getTimeframesHwnd();
 	if (FAILED(SendMessage(hwndTimeframes, WM_COMMAND,
 		MAKEWPARAM(getButtonIdCommand(hwndTimeframes, buttonIndex), 0), NULL)))
-	{
-		wstring errorMessage(_T("Failed to send WM_COMMAND message"));
-		printError(errorMessage);
-		return;
-	}
-}
-
-void changeTimeframeQuik(const int menuItemIndex)
-{
-	HWND hwndQuik = Config::getInstance().getQuikHwnd();
-	HMENU hmenuInterval = Config::getInstance().getIntervalHmenu();
-//	getMenuItemIdCommand(hmenuInterval, _T("~DEBUG~"));
-	const int menuIdCommand = GetMenuItemID(hmenuInterval, menuItemIndex);
-	if (UNKNOWN_MENU_ID_COMMAND == menuIdCommand)
-	{
-		wstring errorMessage(_T("Failed to get menu item ID for menu item index "));
-		errorMessage += longToString(menuItemIndex);
-		MessageBox(NULL, errorMessage.c_str(), NULL, MB_OK | MB_ICONERROR);
-		return;
-	}
-	if (FAILED(SendMessage(hwndQuik, WM_COMMAND, MAKEWPARAM(menuIdCommand, 0), NULL)))
 	{
 		wstring errorMessage(_T("Failed to send WM_COMMAND message"));
 		printError(errorMessage);
@@ -232,6 +199,39 @@ void scrollTabs(const bool forward)
 	LPARAM lParam = MAKELPARAM(pt.x, pt.y);
 	SendMessage(hwndTabs, WM_LBUTTONDOWN, MK_LBUTTON, lParam);
 	SendMessage(hwndTabs, WM_LBUTTONUP, MK_LBUTTON, lParam);
+}
+
+void toggleAutoScroll()
+{
+	HWND hwndCharts = Config::getInstance().getChartsHwnd();
+	if (FAILED(SendMessage(hwndCharts, WM_COMMAND,
+		MAKEWPARAM(getButtonIdCommand(hwndCharts, AUTO_SCROLL_BUTTON_INDEX), 0), NULL)))
+	{
+		wstring errorMessage(_T("Failed to send WM_COMMAND message"));
+		printError(errorMessage);
+		return;
+	}
+}
+
+void changeTimeframeQuik(const int menuItemIndex)
+{
+	HWND hwndQuik = Config::getInstance().getQuikHwnd();
+	HMENU hmenuInterval = Config::getInstance().getIntervalHmenu();
+	//	getMenuItemIdCommand(hmenuInterval, _T("~DEBUG~"));
+	const int menuIdCommand = GetMenuItemID(hmenuInterval, menuItemIndex);
+	if (UNKNOWN_MENU_ID_COMMAND == menuIdCommand)
+	{
+		wstring errorMessage(_T("Failed to get menu item ID for menu item index "));
+		errorMessage += longToString(menuItemIndex);
+		MessageBox(NULL, errorMessage.c_str(), NULL, MB_OK | MB_ICONERROR);
+		return;
+	}
+	if (FAILED(SendMessage(hwndQuik, WM_COMMAND, MAKEWPARAM(menuIdCommand, 0), NULL)))
+	{
+		wstring errorMessage(_T("Failed to send WM_COMMAND message"));
+		printError(errorMessage);
+		return;
+	}
 }
 
 void minimizeActiveChildWindowQuik()
