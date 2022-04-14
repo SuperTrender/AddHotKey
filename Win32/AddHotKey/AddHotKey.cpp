@@ -303,16 +303,6 @@ const TAB getActiveTab(HWND hWnd)
 	return tab;
 }
 
-const wstring getWindowText(HWND hWnd)
-{
-	int cTxtLen = GetWindowTextLength(hWnd);
-	LPTSTR pszMem = (LPTSTR) VirtualAlloc((LPVOID) NULL, (DWORD) (cTxtLen + 1), MEM_COMMIT, PAGE_READWRITE);
-	GetWindowText(hWnd, pszMem, cTxtLen + 1);
-	wstring ws(pszMem);
-	VirtualFree(pszMem, 0, MEM_RELEASE);
-	return ws;
-}
-
 const int getButtonIndex(const bool forForward)
 {
 /** /
@@ -505,4 +495,14 @@ const int getCurrentTimeframeIndex(void)
 	}
 
 	return currentTimeframeIndex;
+}
+
+const wstring getWindowText(HWND hWnd)
+{
+	int cTxtLen = GetWindowTextLength(hWnd);
+	LPTSTR pszMem = (LPTSTR) VirtualAlloc((LPVOID) NULL, (DWORD) (cTxtLen + 1), MEM_COMMIT, PAGE_READWRITE);
+	GetWindowText(hWnd, pszMem, cTxtLen + 1);
+	wstring ws(pszMem);
+	VirtualFree(pszMem, 0, MEM_RELEASE);
+	return ws;
 }
