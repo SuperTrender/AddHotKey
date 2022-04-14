@@ -128,6 +128,10 @@ public:
 	{
 		return intervalHmenu;
 	}
+	const int Config::getAutoScrollButtonIdCommand(void) const
+	{
+		return autoScrollButtonIdCommand;
+	}
 private:
 	Config();
 	~Config();
@@ -146,13 +150,15 @@ private:
 	HWND tabsHwnd;
 	HWND quikHwnd;
 	HMENU intervalHmenu;
+	int autoScrollButtonIdCommand;
 	void initProperties(void);
 	void initTimeframes(void);
 	void initTimeframesQuik(void);
+	void initTimeframesMap(void);
 	void initTemplates(void);
 	void initTemplatesFX(void);
-	void initTimeframesMap(void);
 	void init(void);
+	void initAutoScrollButtonIdCommand(void);
 	const HWND getHwndMain(const std::wstring& className);
 	const HWND getHwndMT(const std::wstring& className);
 	const HWND getHwndStandard(HWND hwndMT, const std::wstring& standardMetaTrader);

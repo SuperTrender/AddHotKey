@@ -204,8 +204,8 @@ void scrollTabs(const bool forward)
 void toggleAutoScroll()
 {
 	HWND hwndCharts = Config::getInstance().getChartsHwnd();
-	if (FAILED(SendMessage(hwndCharts, WM_COMMAND,
-		MAKEWPARAM(getButtonIdCommand(hwndCharts, AUTO_SCROLL_BUTTON_INDEX), 0), NULL)))
+	int autoScrollButtonIdCommand = Config::getInstance().getAutoScrollButtonIdCommand();
+	if (FAILED(SendMessage(hwndCharts, WM_COMMAND, MAKEWPARAM(autoScrollButtonIdCommand, 0), NULL)))
 	{
 		wstring errorMessage(_T("Failed to send WM_COMMAND message"));
 		printError(errorMessage);

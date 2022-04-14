@@ -14,6 +14,7 @@ Config::Config()
 	initTemplates();
 	initTemplatesFX();
 	init();
+	initAutoScrollButtonIdCommand();
 }
 
 Config::~Config()
@@ -89,6 +90,11 @@ void Config::init(void)
 		quikHwnd = getHwndQuik(getQuikClassName());
 		intervalHmenu = getHmenuInterval(quikHwnd);
 	}
+}
+
+void Config::initAutoScrollButtonIdCommand(void)
+{
+	autoScrollButtonIdCommand = getButtonIdCommand(chartsHwnd, AUTO_SCROLL_BUTTON_INDEX);
 }
 
 const HWND Config::getHwndMain(const wstring& className)
