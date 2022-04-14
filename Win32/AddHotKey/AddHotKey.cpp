@@ -6,8 +6,6 @@
 
 using namespace std;
 
-vector<int> timeframes;
-vector<int> timeframesQuik;
 vector<HHOOK> hHooksKeyboard;
 
 vector<HHOOK> addHooks(void)
@@ -91,35 +89,6 @@ void removeHooks(const vector<HHOOK>& hHooks)
 //			printError(errorMessage);
 		}
 	}
-}
-
-vector<int> initTimeframes(void)
-{
-	timeframes.push_back(H1);
-	timeframes.push_back(H4);
-	timeframes.push_back(D1);
-	timeframes.push_back(W1);
-	timeframes.push_back(MN);
-	return timeframes;
-}
-
-vector<int> initTimeframesQuik(void)
-{
-	timeframesQuik.push_back(Hourly);
-	timeframesQuik.push_back(Daily);
-	timeframesQuik.push_back(Weekly);
-	timeframesQuik.push_back(Monthly);
-	return timeframesQuik;
-}
-
-vector<wstring> initTemplates(void)
-{
-	return split(Config::getInstance().getTemplatesLeft(), SPACE);
-}
-
-vector<wstring> initTemplatesFX(void)
-{
-	return split(Config::getInstance().getTemplatesRight(), SPACE);
 }
 
 void toggleAutoScroll()
@@ -287,126 +256,6 @@ void minimizeActiveChildWindowQuik()
 	ShowWindow(hwndActiveChild, SW_MINIMIZE);
 }
 
-const HWND getHwndMain(const wstring& className)
-{
-	HWND hwndMain = FindWindow(className.c_str(), NULL);
-	if (NULL == hwndMain)
-	{
-		wstring errorMessage(_T("Failed to find main window with class name "));
-		errorMessage += className;
-		printError(errorMessage);
-		return NULL;
-	}
-	return hwndMain;
-}
-
-const HWND getHwndMT(const wstring& className)
-{
-	HWND hwndMT = getHwndMain(className);
-	if (NULL == hwndMT)
-	{
-		wstring errorMessage(_T("Failed to find hwndMT window"));
-		printError(errorMessage);
-		return NULL;
-	}
-	return hwndMT;
-}
-
-const HWND getHwndStandard(HWND hwndMT, const wstring& standardMetaTrader)
-{
-	HWND hwndStandard = FindWindowEx(hwndMT, NULL, NULL, standardMetaTrader.c_str());
-	if (NULL == hwndStandard)
-	{
-		wstring errorMessage(_T("Failed to find hwndStandard window"));
-		printError(errorMessage);
-		return NULL;
-	}
-	return hwndStandard;
-}
-
-const HWND getHwndCharts(HWND hwndStandard, const wstring& chartsMetaTrader)
-{
-	HWND hwndCharts = FindWindowEx(hwndStandard, NULL, NULL, chartsMetaTrader.c_str());
-	if (NULL == hwndCharts)
-	{
-		wstring errorMessage(_T("Failed to find hwndCharts window"));
-		printError(errorMessage);
-		return NULL;
-	}
-	return hwndCharts;
-}
-
-const HWND getHwndTimeframes(HWND hwndStandard, const wstring& timeframesMetaTrader)
-{
-	HWND hwndTimeframes = FindWindowEx(hwndStandard, NULL, NULL, timeframesMetaTrader.c_str());
-	Logger::getInstance().log(_T("hwndTimeframes: "));
-	Logger::getInstance().logln(hwndTimeframes);
-	if (NULL == hwndTimeframes)
-	{
-		wstring errorMessage(_T("Failed to find hwndTimeframes window"));
-		printError(errorMessage);
-		return NULL;
-	}
-	return hwndTimeframes;
-}
-
-const HWND getHwndTabs(HWND hwndMT, const wstring& tabsClassName)
-{
-	HWND hwndTabs = FindWindowEx(hwndMT, NULL, tabsClassName.c_str(), NULL);
-	if (NULL == hwndTabs)
-	{
-		wstring errorMessage(_T("Failed to find hwndTabs window"));
-		printError(errorMessage);
-		return NULL;
-	}
-	return hwndTabs;
-}
-
-const HWND getHwndQuik(const wstring& className)
-{
-	HWND hwndQuik = getHwndMain(className);
-	if (NULL == hwndQuik)
-	{
-		wstring errorMessage(_T("Failed to find hwndQuik window"));
-		printError(errorMessage);
-		return NULL;
-	}
-	return hwndQuik;
-}
-
-const HMENU getHmenuInterval(HWND hwndQuik)
-{
-	HMENU hmenuBar = GetMenu(hwndQuik);
-	if (NULL == hmenuBar)
-	{
-		wstring errorMessage(_T("Failed to find hmenuBar"));
-		printError(errorMessage);
-		return NULL;
-	}
-	HMENU hmenuDataExport = GetSubMenu(hmenuBar, DATA_EXPORT_MENU_POSITION_QUIK);
-	if (NULL == hmenuDataExport)
-	{
-		wstring errorMessage(_T("Failed to find hmenuDataExport"));
-		printError(errorMessage);
-		return NULL;
-	}
-	HMENU hmenuCharts = GetSubMenu(hmenuDataExport, CHARTS_MENU_POSITION_QUIK);
-	if (NULL == hmenuCharts)
-	{
-		wstring errorMessage(_T("Failed to find hmenuCharts"));
-		printError(errorMessage);
-		return NULL;
-	}
-	HMENU hmenuInterval = GetSubMenu(hmenuCharts, INTERVAL_MENU_POSITION_QUIK);
-	if (NULL == hmenuInterval)
-	{
-		wstring errorMessage(_T("Failed to find hmenuInterval"));
-		printError(errorMessage);
-		return NULL;
-	}
-	return hmenuInterval;
-}
-
 const TAB getActiveTab(HWND hWnd)
 {
 	WINDOWINFO windowInfo;
@@ -457,8 +306,7 @@ const TAB getActiveTab(HWND hWnd)
 const wstring getWindowText(HWND hWnd)
 {
 	int cTxtLen = GetWindowTextLength(hWnd);
-	LPTSTR pszMem = (LPTSTR) VirtualAlloc((LPVOID) NULL, (DWORD) (cTxtLen + 1),
-		MEM_COMMIT, PAGE_READWRITE);
+	LPTSTR pszMem = (LPTSTR) VirtualAlloc((LPVOID) NULL, (DWORD) (cTxtLen + 1), MEM_COMMIT, PAGE_READWRITE);
 	GetWindowText(hWnd, pszMem, cTxtLen + 1);
 	wstring ws(pszMem);
 	VirtualFree(pszMem, 0, MEM_RELEASE);
@@ -490,7 +338,7 @@ const int getButtonIndex(const bool forForward)
 	Logger::getInstance().log(_T("checkedButtonIndex: "));
 	Logger::getInstance().logln(checkedButtonIndex);
 
-	int index = getIndex(forForward, timeframes, checkedButtonIndex);
+	int index = getIndex(forForward, Config::getInstance().getTimeframes(), checkedButtonIndex);
 
 	Logger::getInstance().log(_T("index: "));
 	Logger::getInstance().logln(index);
@@ -557,7 +405,7 @@ const int getMenuItemIndex(const bool forForward)
 			checkedMenuItemIndex = i;
 		}
 	}
-	return getIndex(forForward, timeframesQuik, checkedMenuItemIndex);
+	return getIndex(forForward, Config::getInstance().getTimeframesQuik(), checkedMenuItemIndex);
 }
 
 const int getMenuItemIdCommand(HMENU hMenu, const wstring& srcMenuItemName)

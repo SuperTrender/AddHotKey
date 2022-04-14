@@ -3,6 +3,7 @@
 
 #include "stdafx.h"
 #include "AddHotKey.h"
+#include "Config.h"
 #include "AddHotKeyGUI.h"
 #include "..\AddHotKeyHook\Cycler.h"
 
@@ -235,7 +236,7 @@ void test(void)
 	changeChart(true);
 /**/
 /**/
-	Cycler<int> timeframesCycler(initTimeframes());
+	Cycler<int> timeframesCycler(Config::getInstance().getTimeframes());
 	timeframesCycler.setCurrentIndex(getButtonIndex(true));
 	changeTimeframe(timeframesCycler.forward());
 // 	timeframesCycler.setCurrentIndex(getButtonIndex(false));

@@ -3,6 +3,7 @@
 
 #include "stdafx.h"
 #include "..\AddHotKey\AddHotKey.h"
+#include "..\AddHotKey\Config.h"
 #include "AddHotKeyHook.h"
 #include "Cycler.h"
 
@@ -17,10 +18,10 @@ using namespace std;
 
 // —оздаЄм глобальную переменную дл€ объ€влени€ глобального хука.
 HHOOK hHookKeyboard = NULL;
-Cycler<int> timeframesCycler(initTimeframes());
-Cycler<wstring> templateCycler(initTemplates());
-Cycler<wstring> templateCyclerFX(initTemplatesFX());
-Cycler<int> timeframesCyclerQuik(initTimeframesQuik());
+Cycler<int> timeframesCycler(Config::getInstance().getTimeframes());
+Cycler<wstring> templateCycler(Config::getInstance().getTemplates());
+Cycler<wstring> templateCyclerFX(Config::getInstance().getTemplatesFX());
+Cycler<int> timeframesCyclerQuik(Config::getInstance().getTimeframesQuik());
 
 BOOL APIENTRY DllMain(HMODULE hModule, DWORD ul_reason_for_call, LPVOID lpReserved)
 {

@@ -16,6 +16,23 @@
 #define WITH_QUIK_PROPERTY_NAME _T("with_quik")
 #define QUIK_CLASS_NAME_PROPERTY_NAME _T("quik_class_name")
 
+#define MAX_CLASS_NAME 256
+
+enum Timeframes { H1 = 4, H4 = 5, D1 = 6, W1 = 7, MN = 8 };
+enum TimeframesQuik { Hourly = 11, Daily = 14, Weekly = 15, Monthly = 16 };
+
+const int CHARTS_MENU_POSITION = 4;
+const int TEMPLATE_MENU_POSITION = 9;
+const int AUTO_SCROLL_BUTTON_INDEX = 8;
+const int UNKNOWN_INDEX = -1;
+const int UNKNOWN_BUTTON_INDEX = -1;
+const int UNKNOWN_MENU_ITEM_INDEX = -1;
+const int UNKNOWN_MENU_ID_COMMAND = -1;
+const int CHARTS_TAB_COUNT = 9;
+const int DATA_EXPORT_MENU_POSITION_QUIK = 1;
+const int CHARTS_MENU_POSITION_QUIK = 2;
+const int INTERVAL_MENU_POSITION_QUIK = 15;
+
 typedef std::map<std::wstring, int> TimeframesMap;
 
 // Singleton (http://en.wikipedia.org/wiki/Singleton_pattern#C.2B.2B)
@@ -63,9 +80,25 @@ public:
 	{
 		return properties.getProperty(QUIK_CLASS_NAME_PROPERTY_NAME);
 	}
+	const std::vector<int> Config::getTimeframes(void) const
+	{
+		return timeframes;
+	}
+	const std::vector<int> Config::getTimeframesQuik(void) const
+	{
+		return timeframesQuik;
+	}
 	const TimeframesMap Config::getTimeframesMap(void) const
 	{
 		return timeframesMap;
+	}
+	const std::vector<std::wstring> Config::getTemplates(void) const
+	{
+		return templates;
+	}
+	const std::vector<std::wstring> Config::getTemplatesFX(void) const
+	{
+		return templatesFX;
 	}
 	const HWND Config::getMTHwnd(void) const
 	{
@@ -101,7 +134,11 @@ private:
 	Config(const Config&);            // intentionally undefined
 	Config& operator=(const Config&); // intentionally undefined
 	Properties properties;
+	std::vector<int> timeframes;
+	std::vector<int> timeframesQuik;
 	TimeframesMap timeframesMap;
+	std::vector<std::wstring> templates;
+	std::vector<std::wstring> templatesFX;
 	HWND mtHwnd;
 	HWND standardHwnd;
 	HWND chartsHwnd;
@@ -110,6 +147,18 @@ private:
 	HWND quikHwnd;
 	HMENU intervalHmenu;
 	void initProperties(void);
+	void initTimeframes(void);
+	void initTimeframesQuik(void);
+	void initTemplates(void);
+	void initTemplatesFX(void);
 	void initTimeframesMap(void);
 	void init(void);
+	const HWND getHwndMain(const std::wstring& className);
+	const HWND getHwndMT(const std::wstring& className);
+	const HWND getHwndStandard(HWND hwndMT, const std::wstring& standardMetaTrader);
+	const HWND getHwndCharts(HWND hwndStandard, const std::wstring& chartsMetaTrader);
+	const HWND getHwndTimeframes(HWND hwndStandard, const std::wstring& timeframesMetaTrader);
+	const HWND getHwndTabs(HWND hwndMT, const std::wstring& tabsClassName);
+	const HWND getHwndQuik(const std::wstring& className);
+	const HMENU getHmenuInterval(HWND hwndQuik);
 };
