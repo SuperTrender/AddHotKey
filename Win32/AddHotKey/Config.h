@@ -175,4 +175,5 @@ private:
 	const HWND getHwndTabs(HWND hwndMT, const std::wstring& tabsClassName);
 	const HWND getHwndQuik(const std::wstring& className);
 	const HMENU getHmenuInterval(HWND hwndQuik);
+	const int getButtonIdCommand(HWND hWnd, const int buttonIndex);
 };
