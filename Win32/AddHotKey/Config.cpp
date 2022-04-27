@@ -14,6 +14,7 @@ Config::Config()
 	initTemplates();
 	initTemplatesFX();
 	init();
+	initTimeframesButtonIdCommandMap();
 	initAutoScrollButtonIdCommand();
 }
 
@@ -64,7 +65,7 @@ void Config::initTimeframesMap(void)
 	timeframesMap[_T("Weekly")] = W1;
 	timeframesMap[_T("Monthly")] = MN;
 }
-	
+
 void Config::initTemplates(void)
 {
 	templates = split(getTemplatesLeft(), SPACE);
@@ -91,6 +92,15 @@ void Config::init(void)
 		quikHwnd = getHwndQuik(getQuikClassName());
 		intervalHmenu = getHmenuInterval(quikHwnd);
 	}
+}
+
+void Config::initTimeframesButtonIdCommandMap(void)
+{
+	timeframesButtonIdCommandMap[H1] = getButtonIdCommand(timeframesHwnd, H1);
+	timeframesButtonIdCommandMap[H4] = getButtonIdCommand(timeframesHwnd, H4);
+	timeframesButtonIdCommandMap[D1] = getButtonIdCommand(timeframesHwnd, D1);
+	timeframesButtonIdCommandMap[W1] = getButtonIdCommand(timeframesHwnd, W1);
+	timeframesButtonIdCommandMap[MN] = getButtonIdCommand(timeframesHwnd, MN);
 }
 
 void Config::initAutoScrollButtonIdCommand(void)

@@ -80,13 +80,13 @@ void Properties::parseProperty(const wstring&  prop)
 void Properties::parseKeyAndValue(const wstring& srcStr, wstring& key, wstring& value) const
 {
 	wstring str(srcStr);
-	string::size_type commentIndex = str.find(_T("#"));
-	if (commentIndex != string::npos)
+	wstring::size_type commentIndex = str.find(_T("#"));
+	if (commentIndex != wstring::npos)
 	{
 		str = str.substr(0, commentIndex);
 	}
-	string::size_type eqIndex = str.find(_T("="));
-	if (eqIndex != string::npos)
+	wstring::size_type eqIndex = str.find(_T("="));
+	if (eqIndex != wstring::npos)
 	{
 		key = str.substr(0, eqIndex);
 		value = str.substr(eqIndex + 1);

@@ -102,7 +102,7 @@ BOOL CALLBACK findTabsClassNameProc(HWND hWnd, LPARAM lParam)
 	TCHAR className[MAX_CLASS_NAME];
 	GetClassName(hWnd, className, MAX_CLASS_NAME);
 	tabsClassName = className;
-	if (tabsClassName.find(_T("Afx:")) != string::npos)
+	if (tabsClassName.find(_T("Afx:")) != wstring::npos)
 	{
 		return FALSE;
 	}
@@ -112,8 +112,8 @@ BOOL CALLBACK findTabsClassNameProc(HWND hWnd, LPARAM lParam)
 void changeTimeframe(const int buttonIndex)
 {
 	HWND hwndTimeframes = Config::getInstance().getTimeframesHwnd();
-	if (FAILED(SendMessage(hwndTimeframes, WM_COMMAND,
-		MAKEWPARAM(getButtonIdCommand(hwndTimeframes, buttonIndex), 0), NULL)))
+	TimeframesButtonIdCommandMap timeframesButtonIdCommandMap = Config::getInstance().getTimeframesButtonIdCommandMap();
+	if (FAILED(SendMessage(hwndTimeframes, WM_COMMAND, MAKEWPARAM(timeframesButtonIdCommandMap[buttonIndex], 0), NULL)))
 	{
 		wstring errorMessage(_T("Failed to send WM_COMMAND message"));
 		printError(errorMessage);

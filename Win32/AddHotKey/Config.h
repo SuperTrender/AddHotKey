@@ -35,6 +35,7 @@ const int CHARTS_MENU_POSITION_QUIK = 2;
 const int INTERVAL_MENU_POSITION_QUIK = 15;
 
 typedef std::map<std::wstring, int> TimeframesMap;
+typedef std::map<int, int> TimeframesButtonIdCommandMap;
 
 // Singleton (http://en.wikipedia.org/wiki/Singleton_pattern#C.2B.2B)
 class Config
@@ -93,6 +94,10 @@ public:
 	{
 		return timeframesMap;
 	}
+	const TimeframesButtonIdCommandMap Config::getTimeframesButtonIdCommandMap(void) const
+	{
+		return timeframesButtonIdCommandMap;
+	}
 	const std::vector<std::wstring> Config::getTemplates(void) const
 	{
 		return templates;
@@ -142,6 +147,7 @@ private:
 	std::vector<int> timeframes;
 	std::vector<int> timeframesQuik;
 	TimeframesMap timeframesMap;
+	TimeframesButtonIdCommandMap timeframesButtonIdCommandMap;
 	std::vector<std::wstring> templates;
 	std::vector<std::wstring> templatesFX;
 	HWND mtHwnd;
@@ -156,6 +162,7 @@ private:
 	void initTimeframes(void);
 	void initTimeframesQuik(void);
 	void initTimeframesMap(void);
+	void initTimeframesButtonIdCommandMap(void);
 	void initTemplates(void);
 	void initTemplatesFX(void);
 	void init(void);
