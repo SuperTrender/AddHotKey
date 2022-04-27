@@ -98,6 +98,7 @@ const wstring findTabsClassName(HWND hwndMT)
 
 BOOL CALLBACK findTabsClassNameProc(HWND hWnd, LPARAM lParam)
 {
+	UNREFERENCED_PARAMETER(lParam);
 	wstring windowText = getWindowText(hWnd);
 	TCHAR className[MAX_CLASS_NAME];
 	GetClassName(hWnd, className, MAX_CLASS_NAME);
@@ -199,10 +200,10 @@ void changeChart(const bool forward)
 void scrollTabs(const bool forward)
 {
 	HWND hwndTabs = Config::getInstance().getTabsHwnd();
-	WINDOWINFO windowInfo;
+	WINDOWINFO windowInfo{};
 	windowInfo.cbSize = sizeof(WINDOWINFO);
 	GetWindowInfo(hwndTabs, &windowInfo);
-	POINT pt;
+	POINT pt{};
 	if (forward)
 	{
 		pt.x = windowInfo.rcClient.right - 10;
@@ -276,13 +277,13 @@ void minimizeActiveChildWindowQuik()
 
 const TAB getActiveTab(HWND hWnd)
 {
-	WINDOWINFO windowInfo;
+	WINDOWINFO windowInfo{};
 	windowInfo.cbSize = sizeof(WINDOWINFO);
 	GetWindowInfo(hWnd, &windowInfo);
 
 	HDC hDc = GetDC(NULL);
 
-	TAB tab;
+	TAB tab{};
 	tab.left = -1;
 	tab.right = -1;
 
@@ -340,7 +341,7 @@ const int getMenuItemIndex(const bool forForward)
 	int checkedMenuItemIndex = UNKNOWN_MENU_ITEM_INDEX;
 	for (int i = 0; i < menuItemCount; i++)
 	{
-		MENUITEMINFO menuItemInfo;
+		MENUITEMINFO menuItemInfo{};
 		menuItemInfo.cbSize = sizeof(MENUITEMINFO);
 		menuItemInfo.fMask = MIIM_STATE;
 		if (!GetMenuItemInfo(hmenuInterval, i, TRUE, &menuItemInfo))
@@ -368,7 +369,7 @@ const int getMenuItemIdCommand(HMENU hMenu, const wstring& srcMenuItemName)
 	}
 	for (int i = 0; i < menuItemCount; i++)
 	{
-		MENUITEMINFO menuItemInfo;
+		MENUITEMINFO menuItemInfo{};
 		menuItemInfo.cbSize = sizeof(MENUITEMINFO);
 		menuItemInfo.fMask = MIIM_STRING;
 		menuItemInfo.dwTypeData = NULL;
@@ -385,15 +386,15 @@ const int getMenuItemIdCommand(HMENU hMenu, const wstring& srcMenuItemName)
 		{
 			wstring errorMessage(_T("Failed to find menuItemName"));
 			printError(errorMessage);
-			delete menuItemName;
+			delete[] menuItemName;
 			return UNKNOWN_MENU_ID_COMMAND;
 		}
 		if (_tcsicmp(srcMenuItemName.c_str(), menuItemName) == 0)
 		{
-			delete menuItemName;
+			delete[] menuItemName;
 			return GetMenuItemID(hMenu, i);
 		}
-		delete menuItemName;
+		delete[] menuItemName;
 	}
 	return UNKNOWN_MENU_ID_COMMAND;
 }
@@ -460,6 +461,10 @@ const wstring getWindowText(HWND hWnd)
 {
 	int cTxtLen = GetWindowTextLength(hWnd);
 	LPTSTR pszMem = (LPTSTR) VirtualAlloc((LPVOID) NULL, (DWORD) (cTxtLen + 1), MEM_COMMIT, PAGE_READWRITE);
+	if (NULL == pszMem)
+	{
+		return {};
+	}
 	GetWindowText(hWnd, pszMem, cTxtLen + 1);
 	wstring ws(pszMem);
 	VirtualFree(pszMem, 0, MEM_RELEASE);

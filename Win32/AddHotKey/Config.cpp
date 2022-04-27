@@ -228,7 +228,7 @@ const HMENU Config::getHmenuInterval(HWND hwndQuik)
 
 const int Config::getButtonIdCommand(HWND hWnd, const int buttonIndex)
 {
-	TBBUTTON Button;
+	TBBUTTON button{};
 	HANDLE hTaskProc;
 	DWORD dwProcessId;
 	LPVOID lpRemoteBuffer;
@@ -237,13 +237,17 @@ const int Config::getButtonIdCommand(HWND hWnd, const int buttonIndex)
 	GetWindowThreadProcessId(hWnd, &dwProcessId);
 	hTaskProc = OpenProcess(PROCESS_ALL_ACCESS, 0, dwProcessId);
 	lpRemoteBuffer = VirtualAllocEx(hTaskProc, NULL, sizeof(TBBUTTON), MEM_COMMIT, PAGE_READWRITE);
+	if (NULL == lpRemoteBuffer)
+	{
+		return -1;
+	}
 	if (FAILED(SendMessage(hWnd, TB_GETBUTTON, buttonIndex, (LPARAM) lpRemoteBuffer)))
 	{
 		wstring errorMessage(_T("Failed to TB_GETBUTTON"));
 		printError(errorMessage);
 		return -1;
 	}
-	if (!ReadProcessMemory(hTaskProc, lpRemoteBuffer, &Button, sizeof(TBBUTTON), &lpNumberOfBytesRead))
+	if (!ReadProcessMemory(hTaskProc, lpRemoteBuffer, &button, sizeof(TBBUTTON), &lpNumberOfBytesRead))
 	{
 		wstring errorMessage(_T("Failed to ReadProcessMemory"));
 		printError(errorMessage);
@@ -251,5 +255,5 @@ const int Config::getButtonIdCommand(HWND hWnd, const int buttonIndex)
 	}
 	VirtualFree(lpRemoteBuffer, 0, MEM_RELEASE);
 	CloseHandle(hTaskProc);
-	return Button.idCommand;
+	return button.idCommand;
 }
