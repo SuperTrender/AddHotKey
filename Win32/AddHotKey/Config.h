@@ -41,139 +41,139 @@ typedef std::map<int, int> TimeframesButtonIdCommandMap;
 class Config
 {
 public:
-	static Config& getInstance();
-	const std::wstring Config::getWithMetaTrader(void) const
-	{
-		return properties.getProperty(WITH_META_TRADER_PROPERTY_NAME);
-	}
-	const std::wstring Config::getMetaTraderClassName(void) const
-	{
-		return properties.getProperty(META_TRADER_CLASS_NAME_PROPERTY_NAME);
-	}
-	const std::wstring Config::getStandardMetaTrader(void) const
-	{
-		return properties.getProperty(STANDARD_META_TRADER_PROPERTY_NAME);
-	}
-	const std::wstring Config::getChartsMetaTrader(void) const
-	{
-		return properties.getProperty(CHARTS_META_TRADER_PROPERTY_NAME);
-	}
-	const std::wstring Config::getTimeframesMetaTrader(void) const
-	{
-		return properties.getProperty(TIMEFRAMES_META_TRADER_PROPERTY_NAME);
-	}
-	const std::wstring Config::getTabsClassName(void) const
-	{
-		return properties.getProperty(TABS_CLASS_NAME_PROPERTY_NAME);
-	}
-	const std::wstring Config::getTemplatesLeft(void) const
-	{
-		return properties.getProperty(TEMPLATES_LEFT_PROPERTY_NAME);
-	}
-	const std::wstring Config::getTemplatesRight(void) const
-	{
-		return properties.getProperty(TEMPLATES_RIGHT_PROPERTY_NAME);
-	}
-	const std::wstring Config::getWithQuik(void) const
-	{
-		return properties.getProperty(WITH_QUIK_PROPERTY_NAME);
-	}
-	const std::wstring Config::getQuikClassName(void) const
-	{
-		return properties.getProperty(QUIK_CLASS_NAME_PROPERTY_NAME);
-	}
-	const std::vector<int> Config::getTimeframes(void) const
-	{
-		return timeframes;
-	}
-	const std::vector<int> Config::getTimeframesQuik(void) const
-	{
-		return timeframesQuik;
-	}
-	const TimeframesMap Config::getTimeframesMap(void) const
-	{
-		return timeframesMap;
-	}
-	const TimeframesButtonIdCommandMap Config::getTimeframesButtonIdCommandMap(void) const
-	{
-		return timeframesButtonIdCommandMap;
-	}
-	const std::vector<std::wstring> Config::getTemplates(void) const
-	{
-		return templates;
-	}
-	const std::vector<std::wstring> Config::getTemplatesFX(void) const
-	{
-		return templatesFX;
-	}
-	const HWND Config::getMTHwnd(void) const
-	{
-		return mtHwnd;
-	}
-	const HWND Config::getStandardHwnd(void) const
-	{
-		return standardHwnd;
-	}
-	const HWND Config::getChartsHwnd(void) const
-	{
-		return chartsHwnd;
-	}
-	const HWND Config::getTimeframesHwnd(void) const
-	{
-		return timeframesHwnd;
-	}
-	const HWND Config::getTabsHwnd(void) const
-	{
-		return tabsHwnd;
-	}
-	const HWND Config::getQuikHwnd(void) const
-	{
-		return quikHwnd;
-	}
-	const HMENU Config::getIntervalHmenu(void) const
-	{
-		return intervalHmenu;
-	}
-	const int Config::getAutoScrollButtonIdCommand(void) const
-	{
-		return autoScrollButtonIdCommand;
-	}
+    static Config& getInstance();
+    const std::wstring Config::getWithMetaTrader(void) const
+    {
+        return properties.getProperty(WITH_META_TRADER_PROPERTY_NAME);
+    }
+    const std::wstring Config::getMetaTraderClassName(void) const
+    {
+        return properties.getProperty(META_TRADER_CLASS_NAME_PROPERTY_NAME);
+    }
+    const std::wstring Config::getStandardMetaTrader(void) const
+    {
+        return properties.getProperty(STANDARD_META_TRADER_PROPERTY_NAME);
+    }
+    const std::wstring Config::getChartsMetaTrader(void) const
+    {
+        return properties.getProperty(CHARTS_META_TRADER_PROPERTY_NAME);
+    }
+    const std::wstring Config::getTimeframesMetaTrader(void) const
+    {
+        return properties.getProperty(TIMEFRAMES_META_TRADER_PROPERTY_NAME);
+    }
+    const std::wstring Config::getTabsClassName(void) const
+    {
+        return properties.getProperty(TABS_CLASS_NAME_PROPERTY_NAME);
+    }
+    const std::wstring Config::getTemplatesLeft(void) const
+    {
+        return properties.getProperty(TEMPLATES_LEFT_PROPERTY_NAME);
+    }
+    const std::wstring Config::getTemplatesRight(void) const
+    {
+        return properties.getProperty(TEMPLATES_RIGHT_PROPERTY_NAME);
+    }
+    const std::wstring Config::getWithQuik(void) const
+    {
+        return properties.getProperty(WITH_QUIK_PROPERTY_NAME);
+    }
+    const std::wstring Config::getQuikClassName(void) const
+    {
+        return properties.getProperty(QUIK_CLASS_NAME_PROPERTY_NAME);
+    }
+    const std::vector<int> Config::getTimeframes(void) const
+    {
+        return timeframes;
+    }
+    const std::vector<int> Config::getTimeframesQuik(void) const
+    {
+        return timeframesQuik;
+    }
+    const TimeframesMap Config::getTimeframesMap(void) const
+    {
+        return timeframesMap;
+    }
+    const TimeframesButtonIdCommandMap Config::getTimeframesButtonIdCommandMap(void) const
+    {
+        return timeframesButtonIdCommandMap;
+    }
+    const std::vector<std::wstring> Config::getTemplates(void) const
+    {
+        return templates;
+    }
+    const std::vector<std::wstring> Config::getTemplatesFX(void) const
+    {
+        return templatesFX;
+    }
+    const HWND Config::getMTHwnd(void) const
+    {
+        return mtHwnd;
+    }
+    const HWND Config::getStandardHwnd(void) const
+    {
+        return standardHwnd;
+    }
+    const HWND Config::getChartsHwnd(void) const
+    {
+        return chartsHwnd;
+    }
+    const HWND Config::getTimeframesHwnd(void) const
+    {
+        return timeframesHwnd;
+    }
+    const HWND Config::getTabsHwnd(void) const
+    {
+        return tabsHwnd;
+    }
+    const HWND Config::getQuikHwnd(void) const
+    {
+        return quikHwnd;
+    }
+    const HMENU Config::getIntervalHmenu(void) const
+    {
+        return intervalHmenu;
+    }
+    const int Config::getAutoScrollButtonIdCommand(void) const
+    {
+        return autoScrollButtonIdCommand;
+    }
 private:
-	Config();
-	~Config();
-	Config(const Config&);            // intentionally undefined
-	Config& operator=(const Config&); // intentionally undefined
-	Properties properties;
-	std::vector<int> timeframes;
-	std::vector<int> timeframesQuik;
-	TimeframesMap timeframesMap;
-	TimeframesButtonIdCommandMap timeframesButtonIdCommandMap;
-	std::vector<std::wstring> templates;
-	std::vector<std::wstring> templatesFX;
-	HWND mtHwnd;
-	HWND standardHwnd;
-	HWND chartsHwnd;
-	HWND timeframesHwnd;
-	HWND tabsHwnd;
-	HWND quikHwnd;
-	HMENU intervalHmenu;
-	int autoScrollButtonIdCommand;
-	void initProperties(void);
-	void initTimeframes(void);
-	void initTimeframesQuik(void);
-	void initTimeframesMap(void);
-	void initTimeframesButtonIdCommandMap(void);
-	void initTemplates(void);
-	void initTemplatesFX(void);
-	void init(void);
-	void initAutoScrollButtonIdCommand(void);
-	const HWND getHwndMain(const std::wstring& className);
-	const HWND getHwndMT(const std::wstring& className);
-	const HWND getHwndStandard(HWND hwndMT, const std::wstring& standardMetaTrader);
-	const HWND getHwndCharts(HWND hwndStandard, const std::wstring& chartsMetaTrader);
-	const HWND getHwndTimeframes(HWND hwndStandard, const std::wstring& timeframesMetaTrader);
-	const HWND getHwndTabs(HWND hwndMT, const std::wstring& tabsClassName);
-	const HWND getHwndQuik(const std::wstring& className);
-	const HMENU getHmenuInterval(HWND hwndQuik);
-	const int getButtonIdCommand(HWND hWnd, const int buttonIndex);
+    Config();
+    ~Config();
+    Config(const Config&);            // intentionally undefined
+    Config& operator=(const Config&); // intentionally undefined
+    Properties properties;
+    std::vector<int> timeframes;
+    std::vector<int> timeframesQuik;
+    TimeframesMap timeframesMap;
+    TimeframesButtonIdCommandMap timeframesButtonIdCommandMap;
+    std::vector<std::wstring> templates;
+    std::vector<std::wstring> templatesFX;
+    HWND mtHwnd;
+    HWND standardHwnd;
+    HWND chartsHwnd;
+    HWND timeframesHwnd;
+    HWND tabsHwnd;
+    HWND quikHwnd;
+    HMENU intervalHmenu;
+    int autoScrollButtonIdCommand;
+    void initProperties(void);
+    void initTimeframes(void);
+    void initTimeframesQuik(void);
+    void initTimeframesMap(void);
+    void initTimeframesButtonIdCommandMap(void);
+    void initTemplates(void);
+    void initTemplatesFX(void);
+    void init(void);
+    void initAutoScrollButtonIdCommand(void);
+    const HWND getHwndMain(const std::wstring& className);
+    const HWND getHwndMT(const std::wstring& className);
+    const HWND getHwndStandard(HWND hwndMT, const std::wstring& standardMetaTrader);
+    const HWND getHwndCharts(HWND hwndStandard, const std::wstring& chartsMetaTrader);
+    const HWND getHwndTimeframes(HWND hwndStandard, const std::wstring& timeframesMetaTrader);
+    const HWND getHwndTabs(HWND hwndMT, const std::wstring& tabsClassName);
+    const HWND getHwndQuik(const std::wstring& className);
+    const HMENU getHmenuInterval(HWND hwndQuik);
+    const int getButtonIdCommand(HWND hWnd, const int buttonIndex);
 };

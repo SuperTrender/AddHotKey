@@ -2,8 +2,8 @@
 
 typedef struct tagTAB
 {
-	LONG left;
-	LONG right;
+    LONG left;
+    LONG right;
 } TAB;
 
 const std::vector<HHOOK> addHooks(void);

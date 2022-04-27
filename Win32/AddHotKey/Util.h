@@ -6,7 +6,7 @@
 
 void printError(const std::wstring& msg);
 void processPlaceHolder(std::wstring& srcString, const std::wstring& placeHolderName,
-						const std::wstring& placeHolderValue);
+                        const std::wstring& placeHolderValue);
 const std::wstring longToString(long i);
 const std::wstring s2ws(const char* s);
 const std::wstring s2ws(const std::string& s);
