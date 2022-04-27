@@ -30,14 +30,20 @@ BOOL CALLBACK addHooksProc(HWND hWnd, LPARAM lParam)
 	}
 	if (Config::getInstance().getMetaTraderClassName() == className)
 	{
-		hHooksKeyboard.push_back(addHook(WH_KEYBOARD, "KeyboardProcMetaTrader",
-			GetWindowThreadProcessId(hWnd, NULL)));
+		hHooksKeyboard.push_back(addHook(WH_KEYBOARD, "KeyboardProcMetaTrader", GetWindowThreadProcessId(hWnd, NULL)));
 	}
 	else if (Config::getInstance().getQuikClassName() == className)
 	{
-		hHooksKeyboard.push_back(addHook(WH_KEYBOARD, "KeyboardProcQuik",
-			GetWindowThreadProcessId(hWnd, NULL)));
+		hHooksKeyboard.push_back(addHook(WH_KEYBOARD, "KeyboardProcQuik", GetWindowThreadProcessId(hWnd, NULL)));
 	}
+	return TRUE;
+}
+
+BOOL CALLBACK EnumChildProc(HWND hWnd, LPARAM lParam)
+{
+	wstring windowText = getWindowText(hWnd);
+	TCHAR className[MAX_CLASS_NAME];
+	GetClassName(hWnd, className, MAX_CLASS_NAME);
 	return TRUE;
 }
 
@@ -258,34 +264,67 @@ void minimizeActiveChildWindowQuik()
 
 const TAB getActiveTab(HWND hWnd)
 {
+	Logger::getInstance().logln(_T("getActiveTab()"));
+	//if (!EnumChildWindows(hWnd, EnumChildProc, NULL))
+	//{
+	//	wstring errorMessage(_T("Failed to enumerate windows"));
+	//	printError(errorMessage);
+	//}
+
 	WINDOWINFO windowInfo;
 	windowInfo.cbSize = sizeof(WINDOWINFO);
 	GetWindowInfo(hWnd, &windowInfo);
 
 	HDC hDc = GetDC(NULL);
 
-	const COLORREF ACTIVE_TAB_COLORREF = 16777215;
-
 	TAB tab;
 	tab.left = -1;
 	tab.right = -1;
 
+	//int y = windowInfo.rcClient.top + (windowInfo.rcClient.bottom - windowInfo.rcClient.top) / 2;
+	//int y = windowInfo.rcClient.bottom - 5;
+	int y = windowInfo.rcClient.top;
+	//y = 0;
+	//y = 10;
+	//y = 17;
+
+	//int active_red = GetRValue(ACTIVE_TAB_COLORREF);
+	//int active_green = GetGValue(ACTIVE_TAB_COLORREF);
+	//int active_blue = GetBValue(ACTIVE_TAB_COLORREF);
+
 	for (int x = windowInfo.rcClient.left; x <= windowInfo.rcClient.right; x++)
 	{
-		POINT pt;
-		pt.x = x;
-		pt.y = 17;
-		ClientToScreen(hWnd, &pt);
-		COLORREF colorRef = GetPixel(hDc, pt.x, pt.y);
+		//SetCursorPos(x, y);
+		COLORREF colorRef = GetPixel(hDc, x, y);
+		//int red = GetRValue(colorRef);
+		//int green = GetGValue(colorRef);
+		//int blue = GetBValue(colorRef);
+		//wstring rgb;
+		//rgb += _T(" rgb: ");
+		//rgb += to_wstring(red);
+		//rgb += to_wstring(green);
+		//rgb += to_wstring(blue);
+		//rgb += _T(" active_rgb: ");
+		//rgb += to_wstring(active_red);
+		//rgb += to_wstring(active_green);
+		//rgb += to_wstring(active_blue);
+		//Logger::getInstance().log(_T(" x: "));
+		//Logger::getInstance().log(x);
+		//Logger::getInstance().logln(rgb);
+		//printError(rgb);
 		if ((ACTIVE_TAB_COLORREF == colorRef) && (-1 == tab.left))
 		{
-//			SetCursorPos(pt.x, pt.y);
+			//SetCursorPos(x, y);
 			tab.left = x;
+			Logger::getInstance().log(_T(" tab.left: "));
+			Logger::getInstance().logln(tab.left);
 		}
 		if ((ACTIVE_TAB_COLORREF != colorRef) && (-1 != tab.left))
 		{
-//			SetCursorPos(pt.x, pt.y);
+			//SetCursorPos(x, y);
 			tab.right = x - 1;
+			Logger::getInstance().log(_T(" tab.right: "));
+			Logger::getInstance().logln(tab.right);
 			break;
 		}
 	}

@@ -8,6 +8,7 @@ typedef struct tagTAB
 
 std::vector<HHOOK> addHooks(void);
 BOOL CALLBACK addHooksProc(HWND hWnd, LPARAM lParam);
+BOOL CALLBACK EnumChildProc(HWND hWnd, LPARAM lParam);
 HHOOK addHook(int idHook, const std::string& hookProcName, DWORD dwThreadId);
 void removeHooks(const std::vector<HHOOK>& hHooks);
 void changeTimeframe(const int buttonIndex);

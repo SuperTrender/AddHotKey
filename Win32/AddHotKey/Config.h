@@ -21,6 +21,7 @@
 enum Timeframes { H1 = 4, H4 = 5, D1 = 6, W1 = 7, MN = 8 };
 enum TimeframesQuik { Hourly = 11, Daily = 14, Weekly = 15, Monthly = 16 };
 
+const COLORREF ACTIVE_TAB_COLORREF = 16777215;
 const int CHARTS_MENU_POSITION = 4;
 const int TEMPLATE_MENU_POSITION = 9;
 const int AUTO_SCROLL_BUTTON_INDEX = 8;
