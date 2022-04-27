@@ -7,8 +7,9 @@
 using namespace std;
 
 vector<HHOOK> hHooksKeyboard;
+wstring tabsClassName;
 
-vector<HHOOK> addHooks(void)
+const vector<HHOOK> addHooks(void)
 {
 	if (!EnumWindows(addHooksProc, NULL))
 	{
@@ -36,14 +37,6 @@ BOOL CALLBACK addHooksProc(HWND hWnd, LPARAM lParam)
 	{
 		hHooksKeyboard.push_back(addHook(WH_KEYBOARD, "KeyboardProcQuik", GetWindowThreadProcessId(hWnd, NULL)));
 	}
-	return TRUE;
-}
-
-BOOL CALLBACK EnumChildProc(HWND hWnd, LPARAM lParam)
-{
-	wstring windowText = getWindowText(hWnd);
-	TCHAR className[MAX_CLASS_NAME];
-	GetClassName(hWnd, className, MAX_CLASS_NAME);
 	return TRUE;
 }
 
@@ -95,6 +88,25 @@ void removeHooks(const vector<HHOOK>& hHooks)
 //			printError(errorMessage);
 		}
 	}
+}
+
+const wstring findTabsClassName(HWND hwndMT)
+{
+	EnumChildWindows(hwndMT, findTabsClassNameProc, NULL);
+	return tabsClassName;
+}
+
+BOOL CALLBACK findTabsClassNameProc(HWND hWnd, LPARAM lParam)
+{
+	wstring windowText = getWindowText(hWnd);
+	TCHAR className[MAX_CLASS_NAME];
+	GetClassName(hWnd, className, MAX_CLASS_NAME);
+	tabsClassName = className;
+	if (tabsClassName.find(_T("Afx:")) != string::npos)
+	{
+		return FALSE;
+	}
+	return TRUE;
 }
 
 void changeTimeframe(const int buttonIndex)
@@ -264,13 +276,6 @@ void minimizeActiveChildWindowQuik()
 
 const TAB getActiveTab(HWND hWnd)
 {
-	Logger::getInstance().logln(_T("getActiveTab()"));
-	//if (!EnumChildWindows(hWnd, EnumChildProc, NULL))
-	//{
-	//	wstring errorMessage(_T("Failed to enumerate windows"));
-	//	printError(errorMessage);
-	//}
-
 	WINDOWINFO windowInfo;
 	windowInfo.cbSize = sizeof(WINDOWINFO);
 	GetWindowInfo(hWnd, &windowInfo);

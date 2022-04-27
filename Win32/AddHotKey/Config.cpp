@@ -83,7 +83,8 @@ void Config::init(void)
 		standardHwnd = getHwndStandard(mtHwnd, getStandardMetaTrader());
 		chartsHwnd = getHwndCharts(standardHwnd, getChartsMetaTrader());
 		timeframesHwnd = getHwndTimeframes(standardHwnd, getTimeframesMetaTrader());
-		tabsHwnd = getHwndTabs(mtHwnd, getTabsClassName());
+		//tabsHwnd = getHwndTabs(mtHwnd, getTabsClassName());
+		tabsHwnd = getHwndTabs(mtHwnd, findTabsClassName(mtHwnd));
 	}
 	if (getWithQuik() == _T("yes"))
 	{
@@ -149,8 +150,6 @@ const HWND Config::getHwndCharts(HWND hwndStandard, const wstring& chartsMetaTra
 const HWND Config::getHwndTimeframes(HWND hwndStandard, const wstring& timeframesMetaTrader)
 {
 	HWND hwndTimeframes = FindWindowEx(hwndStandard, NULL, NULL, timeframesMetaTrader.c_str());
-	Logger::getInstance().log(_T("hwndTimeframes: "));
-	Logger::getInstance().logln(hwndTimeframes);
 	if (NULL == hwndTimeframes)
 	{
 		wstring errorMessage(_T("Failed to find hwndTimeframes window"));

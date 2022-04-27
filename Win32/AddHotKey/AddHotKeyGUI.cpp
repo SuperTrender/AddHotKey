@@ -222,6 +222,9 @@ const int getTimeframeIndex(const int timeframe);
 
 void test(void)
 {
+/**/
+	addHooks();
+/**/
 /** /
 	getHwndTabs();
 /**/
@@ -235,7 +238,7 @@ void test(void)
 /** /
 	changeChart(true);
 /**/
-/**/
+/** /
 	Cycler<int> timeframesCycler(Config::getInstance().getTimeframes());
 	timeframesCycler.setCurrentIndex(getButtonIndex(true));
 	changeTimeframe(timeframesCycler.forward());

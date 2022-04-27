@@ -6,11 +6,12 @@ typedef struct tagTAB
 	LONG right;
 } TAB;
 
-std::vector<HHOOK> addHooks(void);
+const std::vector<HHOOK> addHooks(void);
 BOOL CALLBACK addHooksProc(HWND hWnd, LPARAM lParam);
-BOOL CALLBACK EnumChildProc(HWND hWnd, LPARAM lParam);
 HHOOK addHook(int idHook, const std::string& hookProcName, DWORD dwThreadId);
 void removeHooks(const std::vector<HHOOK>& hHooks);
+const std::wstring findTabsClassName(HWND hwndMT);
+BOOL CALLBACK findTabsClassNameProc(HWND hWnd, LPARAM lParam);
 void changeTimeframe(const int buttonIndex);
 void changeTemplate(const std::wstring& templateName);
 void changeChart(const bool forward);
