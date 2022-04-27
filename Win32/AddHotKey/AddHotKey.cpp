@@ -281,50 +281,19 @@ const TAB getActiveTab(HWND hWnd)
 	tab.left = -1;
 	tab.right = -1;
 
-	//int y = windowInfo.rcClient.top + (windowInfo.rcClient.bottom - windowInfo.rcClient.top) / 2;
-	//int y = windowInfo.rcClient.bottom - 5;
 	int y = windowInfo.rcClient.top;
-	//y = 0;
-	//y = 10;
-	//y = 17;
-
-	//int active_red = GetRValue(ACTIVE_TAB_COLORREF);
-	//int active_green = GetGValue(ACTIVE_TAB_COLORREF);
-	//int active_blue = GetBValue(ACTIVE_TAB_COLORREF);
-
 	for (int x = windowInfo.rcClient.left; x <= windowInfo.rcClient.right; x++)
 	{
-		//SetCursorPos(x, y);
 		COLORREF colorRef = GetPixel(hDc, x, y);
-		//int red = GetRValue(colorRef);
-		//int green = GetGValue(colorRef);
-		//int blue = GetBValue(colorRef);
-		//wstring rgb;
-		//rgb += _T(" rgb: ");
-		//rgb += to_wstring(red);
-		//rgb += to_wstring(green);
-		//rgb += to_wstring(blue);
-		//rgb += _T(" active_rgb: ");
-		//rgb += to_wstring(active_red);
-		//rgb += to_wstring(active_green);
-		//rgb += to_wstring(active_blue);
-		//Logger::getInstance().log(_T(" x: "));
-		//Logger::getInstance().log(x);
-		//Logger::getInstance().logln(rgb);
-		//printError(rgb);
 		if ((ACTIVE_TAB_COLORREF == colorRef) && (-1 == tab.left))
 		{
 			//SetCursorPos(x, y);
 			tab.left = x;
-			Logger::getInstance().log(_T(" tab.left: "));
-			Logger::getInstance().logln(tab.left);
 		}
 		if ((ACTIVE_TAB_COLORREF != colorRef) && (-1 != tab.left))
 		{
 			//SetCursorPos(x, y);
 			tab.right = x - 1;
-			Logger::getInstance().log(_T(" tab.right: "));
-			Logger::getInstance().logln(tab.right);
 			break;
 		}
 	}
@@ -344,34 +313,8 @@ const TAB getActiveTab(HWND hWnd)
 
 const int getButtonIndex(const bool forForward)
 {
-/** /
-	HWND hwndTimeframes = Config::getInstance().getTimeframesHwnd();
-	int checkedButtonIndex = UNKNOWN_BUTTON_INDEX;
-	LRESULT buttonCount = SendMessage(hwndTimeframes, TB_BUTTONCOUNT, 0, 0);
-	for (int i = 0; i < buttonCount; i++)
-	{
-		if (SendMessage(hwndTimeframes, TB_ISBUTTONCHECKED,
-						getButtonIdCommand(hwndTimeframes, i), 0))
-		{
-			checkedButtonIndex = i;
-		}
-	}
-/**/
-	
-/**/
 	int checkedButtonIndex = getCurrentTimeframeIndex();
-/**/
-
-	Logger::getInstance().logln(_T(""));
-	Logger::getInstance().logln(_T("enum Timeframes {H1 = 4, H4 = 5, D1 = 6, W1 = 7, MN = 8};"));
-	Logger::getInstance().log(_T("checkedButtonIndex: "));
-	Logger::getInstance().logln(checkedButtonIndex);
-
 	int index = getIndex(forForward, Config::getInstance().getTimeframes(), checkedButtonIndex);
-
-	Logger::getInstance().log(_T("index: "));
-	Logger::getInstance().logln(index);
-
 	return index;
 }
 
