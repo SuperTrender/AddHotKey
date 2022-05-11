@@ -78,16 +78,19 @@ void Config::initTemplatesFX(void)
 
 void Config::init(void)
 {
-    if (getWithMetaTrader() == _T("yes"))
+    if (getWithMetaTrader() == YES)
     {
         mtHwnd = getHwndMT(getMetaTraderClassName());
         standardHwnd = getHwndStandard(mtHwnd, getStandardMetaTrader());
         chartsHwnd = getHwndCharts(standardHwnd, getChartsMetaTrader());
         timeframesHwnd = getHwndTimeframes(standardHwnd, getTimeframesMetaTrader());
-        //tabsHwnd = getHwndTabs(mtHwnd, getTabsClassName());
-        tabsHwnd = getHwndTabs(mtHwnd, findTabsClassName(mtHwnd));
+        wstring findTabs = getFindTabs();
+        BOOL isFindTabs = getFindTabs() == YES;
+        wstring tabsClassName = getFindTabs() == YES
+            ? findTabsClassName(mtHwnd, getTabsClassNamePrefix()) : getTabsClassName();
+        tabsHwnd = getHwndTabs(mtHwnd, tabsClassName);
     }
-    if (getWithQuik() == _T("yes"))
+    if (getWithQuik() == YES)
     {
         quikHwnd = getHwndQuik(getQuikClassName());
         intervalHmenu = getHmenuInterval(quikHwnd);

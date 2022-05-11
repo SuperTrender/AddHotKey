@@ -5,11 +5,14 @@
 
 #define PROCESS_NAME _T("AddHotKey.exe")
 #define PROPERTIES_FILE_NAME _T("AddHotKey.ini")
+#define YES _T("yes")
 #define WITH_META_TRADER_PROPERTY_NAME _T("with_meta_trader")
 #define META_TRADER_CLASS_NAME_PROPERTY_NAME _T("meta_trader_class_name")
 #define STANDARD_META_TRADER_PROPERTY_NAME _T("standard_meta_trader")
 #define CHARTS_META_TRADER_PROPERTY_NAME _T("charts_meta_trader")
 #define TIMEFRAMES_META_TRADER_PROPERTY_NAME _T("timeframes_meta_trader")
+#define FIND_TABS_PROPERTY_NAME _T("find_tabs")
+#define TABS_CLASS_NAME_PREFIX_PROPERTY_NAME _T("tabs_class_name_prefix")
 #define TABS_CLASS_NAME_PROPERTY_NAME _T("tabs_class_name")
 #define TEMPLATES_LEFT_PROPERTY_NAME _T("templates_left")
 #define TEMPLATES_RIGHT_PROPERTY_NAME _T("templates_right")
@@ -61,6 +64,14 @@ public:
     const std::wstring Config::getTimeframesMetaTrader(void) const
     {
         return properties.getProperty(TIMEFRAMES_META_TRADER_PROPERTY_NAME);
+    }
+    const std::wstring Config::getFindTabs(void) const
+    {
+        return properties.getProperty(FIND_TABS_PROPERTY_NAME);
+    }
+    const std::wstring Config::getTabsClassNamePrefix(void) const
+    {
+        return properties.getProperty(TABS_CLASS_NAME_PREFIX_PROPERTY_NAME);
     }
     const std::wstring Config::getTabsClassName(void) const
     {

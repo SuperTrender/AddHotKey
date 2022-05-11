@@ -10,7 +10,7 @@ const std::vector<HHOOK> addHooks(void);
 BOOL CALLBACK addHooksProc(HWND hWnd, LPARAM lParam);
 HHOOK addHook(int idHook, const std::string& hookProcName, DWORD dwThreadId);
 void removeHooks(const std::vector<HHOOK>& hHooks);
-const std::wstring findTabsClassName(HWND hwndMT);
+const std::wstring findTabsClassName(HWND hwndMT, const std::wstring& tabsClassNamePrefix);
 BOOL CALLBACK findTabsClassNameProc(HWND hWnd, LPARAM lParam);
 void changeTimeframe(const int buttonIndex);
 void changeTemplate(const std::wstring& templateName);

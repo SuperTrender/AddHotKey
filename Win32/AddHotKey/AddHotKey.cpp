@@ -90,21 +90,21 @@ void removeHooks(const vector<HHOOK>& hHooks)
     }
 }
 
-const wstring findTabsClassName(HWND hwndMT)
+const wstring findTabsClassName(HWND hwndMT, const wstring& tabsClassNamePrefix)
 {
-    EnumChildWindows(hwndMT, findTabsClassNameProc, NULL);
+    EnumChildWindows(hwndMT, findTabsClassNameProc, (LPARAM) tabsClassNamePrefix.c_str());
     return tabsClassName;
 }
 
 BOOL CALLBACK findTabsClassNameProc(HWND hWnd, LPARAM lParam)
 {
-    UNREFERENCED_PARAMETER(lParam);
-    wstring windowText = getWindowText(hWnd);
     TCHAR className[MAX_CLASS_NAME];
     GetClassName(hWnd, className, MAX_CLASS_NAME);
-    tabsClassName = className;
-    if (tabsClassName.find(_T("Afx:")) != wstring::npos)
+    wstring classNameWstring(className);
+    LPCTSTR tabsClassNamePrefix = (LPCTSTR) lParam;
+    if (classNameWstring.find(tabsClassNamePrefix) != wstring::npos)
     {
+        tabsClassName = classNameWstring;
         return FALSE;
     }
     return TRUE;
