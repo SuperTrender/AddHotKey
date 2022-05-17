@@ -84,8 +84,6 @@ void Config::init(void)
         standardHwnd = getHwndStandard(mtHwnd, getStandardMetaTrader());
         chartsHwnd = getHwndCharts(standardHwnd, getChartsMetaTrader());
         timeframesHwnd = getHwndTimeframes(standardHwnd, getTimeframesMetaTrader());
-        wstring findTabs = getFindTabs();
-        BOOL isFindTabs = getFindTabs() == YES;
         wstring tabsClassName = getFindTabs() == YES
             ? findTabsClassName(mtHwnd, getTabsClassNamePrefix()) : getTabsClassName();
         tabsHwnd = getHwndTabs(mtHwnd, tabsClassName);
