@@ -2,7 +2,8 @@
 # This .gitignore file was automatically created by Microsoft(R) Visual Studio.
 ################################################################################
 
-/Win32/.vs/AddHotKey/v17
+/.vs
+/Win32/.vs
 /Win32/AddHotKey/Debug
 /Win32/AddHotKey/Release
 /Win32/AddHotKeyHook/Debug
